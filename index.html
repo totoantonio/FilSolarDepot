@@ -282,6 +282,61 @@
   .calc .cta { margin-top: 24px; }
   @media (max-width: 700px) { .results { grid-template-columns: 1fr 1fr; } .calc { padding: 24px 20px; } }
 
+  [hidden] { display: none !important; }
+
+  /* order: Place Order -> printable summary -> payment */
+  .place { width: 100%; height: 52px; margin-top: 16px; }
+  .place-note { font-size: .8rem; color: var(--gray); text-align: center; margin: 8px 0 0;  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* order summary pop-up: compact receipt + payment */
+  .sum-dlg { max-width: 500px; padding: 0; }
+  .sum-dlg .x { top: 14px; right: 14px; width: 36px; height: 36px; font-size: 1.3rem; }
+  .receipt { padding: 28px 28px 8px; display: grid; gap: 16px; }
+  .r-head { display: grid; gap: 4px; padding-right: 40px; }
+  .r-head img { height: 26px; width: auto; margin-bottom: 8px; }
+  .r-head strong { font-size: 1.15rem; color: var(--navy); }
+  .r-head span { font-size: .8rem; color: var(--gray); }
+  .r-status { margin: 0; padding: 10px 12px; border-radius: 10px; background: var(--soft); font-size: .8rem; line-height: 1.4; }
+  .r-status.ok { background: #E6F4EA; color: #0D652D; }
+  .r-status.err { background: #FCE8E6; color: #A50E0E; }
+  .r-cust { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; font-size: .9rem; }
+  .r-cust div { min-width: 0; overflow-wrap: anywhere; }
+  .r-cust span, .r-lbl { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--gray); margin-bottom: 2px; }
+  .receipt table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  .receipt th { text-align: left; font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--gray); font-weight: 500; padding: 6px 0; border-bottom: 1px solid #E5E5EA; }
+  .receipt td { padding: 8px 0; border-bottom: 1px solid #F0F0F2; vertical-align: top; }
+  .receipt th:not(:first-child), .receipt td:not(:first-child) { text-align: right; padding-left: 10px; white-space: nowrap; }
+  .receipt tfoot td { border: 0; font-weight: 600; font-size: 1.05rem; padding-top: 10px; }
+  .receipt p { margin: 0; font-size: .9rem; }
+  .receipt .fine { font-size: .75rem; }
+  .r-actions { display: grid; grid-template-columns: 1fr 1.6fr; gap: 8px; padding: 8px 28px 0; }
+  .r-actions .btn, .r-pay .btn { height: 44px; padding: 0 12px; font-size: .9rem; }
+  .r-actions .ghost { color: var(--ink); border-color: #C4C7C5; }
+  .r-pay { margin: 16px 28px 28px; background: var(--surface, #F0F4F9); border-radius: 16px; padding: 18px; text-align: center; }
+  .r-pay h3 { margin: 0 0 4px; font-size: 1rem; color: var(--navy); }
+  .r-pay p { margin: 0 0 12px; font-size: .8rem; color: #444746; }
+  .r-pay .pay { margin: 0; gap: 8px; }
+  .r-pay .ref { white-space: nowrap; font-size: min(.8rem, 3.3vw); } /* shrinks on tiny phones so the order no. is never cut */
+  .receipt td small { display: block; font-size: .75rem; color: var(--gray); }
+  .sum-dlg { width: calc(100% - 24px); max-height: calc(100% - 24px); }
+  .dlg-actions.one { grid-template-columns: 1fr; }
+  @media (max-width: 500px) {
+    .receipt { padding: 22px 20px 8px; }
+    .r-actions { padding: 8px 20px 0; }
+    .r-pay { margin: 14px 20px 20px; }
+    .r-cust { grid-template-columns: 1fr; }
+    .r-pay .pay { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 360px) { .r-actions { grid-template-columns: 1fr; } }
+  /* print / Save as PDF: only the receipt */
+  @media print {
+    body > *:not(#order), #order > .wrap > *:not(#summary), .no-print { display: none !important; }
+    body { padding: 0; }
+    #order { padding: 0; }
+    .sum-dlg { position: static; max-width: none; max-height: none; width: auto; margin: 0; box-shadow: none; overflow: visible; }
+    .sum-dlg::backdrop { display: none; }
+    .receipt { padding: 0; }
+  }
+
   /* testimonials */
   #reviews { background: var(--soft); }
   #reviews .grid { grid-template-columns: repeat(3, 1fr); }
@@ -718,11 +773,10 @@
         <label>Hybrid Inverter 6kW <small>₱55,000 / unit</small><input name="Inverter 6kW" type="number" min="0" value="0" data-price="55000"></label>
         <p class="total">Total <strong id="total">₱0</strong></p>
         <input type="hidden" name="Order total" id="total-field" value="₱0">
-        <input type="hidden" name="Payment method" id="pay-field">
-        <div class="pay">
-          <button class="btn" type="button" data-pay="GCash / QR Ph" data-dialog="pay-qr">Pay via GCash / QR Ph</button>
-          <button class="btn alt" type="button" data-pay="Bank transfer" data-dialog="pay-bank">Pay via Bank Transfer</button>
-        </div>
+        <input type="hidden" name="Order number" id="order-no">
+        <input type="hidden" name="_subject" id="order-subject" value="New order">
+        <button class="btn place" type="submit">Place Order</button>
+        <p class="place-note">Next: your order summary, then payment.</p>
         </div>
       </fieldset>
       </div>
@@ -745,6 +799,10 @@
       </fieldset>
       <label>Notes <textarea name="notes" rows="3"></textarea></label>
       </div>
+    </form>
+
+    <!-- step 2: filled by JS after Place Order; this is what gets printed / saved as PDF -->
+    <dialog id="summary" class="sum-dlg" aria-label="Order summary"></dialog>
 
       <dialog id="pay-qr">
         <h3>Pay via GCash / QR Ph</h3>
@@ -755,13 +813,10 @@
           <li>Scan the code above.</li>
           <li>Enter the exact amount shown and confirm the payment.</li>
           <li>Take a screenshot of your payment receipt.</li>
-          <li>Email the screenshot with your full name and mobile number to <a class="pay-email"></a>.</li>
-          <li>Tap <b>Send Order</b> below.</li>
+          <li>Email the screenshot with your order number <b class="ono"></b> to <a class="pay-email"></a>.</li>
         </ol>
-        <div class="dlg-actions">
-          <button class="btn ghost" type="button" data-close>Back</button>
-          <button class="btn" type="submit">Send Order</button>
-        </div>
+        <p class="fine">We'll confirm your payment and delivery schedule within 24 hours.</p>
+        <div class="dlg-actions one"><button class="btn" type="button" data-close>Done</button></div>
       </dialog>
 
       <dialog id="pay-bank">
@@ -775,17 +830,13 @@
         <p class="due">Amount to Pay: <strong class="amt"></strong></p>
         <ol>
           <li>Transfer the exact amount via online banking (InstaPay or PESONet) or deposit over the counter.</li>
-          <li>Put your full name in the reference or notes field.</li>
+          <li>Put your order number <b class="ono"></b> in the reference or notes field.</li>
           <li>Take a screenshot of the confirmation, or a photo of your deposit slip.</li>
-          <li>Email it with your full name and mobile number to <a class="pay-email"></a>.</li>
-          <li>Tap <b>Send Order</b> below.</li>
+          <li>Email it with your order number to <a class="pay-email"></a>.</li>
         </ol>
-        <div class="dlg-actions">
-          <button class="btn ghost" type="button" data-close>Back</button>
-          <button class="btn" type="submit">Send Order</button>
-        </div>
+        <p class="fine">We'll confirm your payment and delivery schedule within 24 hours.</p>
+        <div class="dlg-actions one"><button class="btn" type="button" data-close>Done</button></div>
       </dialog>
-    </form>
   </div>
 </section>
 
@@ -892,9 +943,63 @@
     document.getElementById('total').textContent = peso(total);
     document.getElementById('total-field').value = peso(total);
   });
+  // Place Order: record the order (email via Formspree), then swap the form for a printable summary + payment options
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const summary = document.getElementById('summary');
+  const PAY_EMAIL = 'admin.lloyd@heandsons.com'; // TBA: confirm address
   form.addEventListener('submit', e => {
-    if (total === 0) { e.preventDefault(); alert('Please add at least one product.'); }
-    else if (!document.getElementById('pay-field').value) { e.preventDefault(); alert('Please choose a payment option below the total.'); }
+    e.preventDefault();
+    if (total === 0) return alert('Please add at least one product.');
+    const now = new Date();
+    const no = 'FSD-' + now.toISOString().slice(0, 10).replace(/-/g, '') + '-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+    document.getElementById('order-no').value = no;
+    document.getElementById('order-subject').value = 'New order ' + no;
+    const f = form.elements;
+    const items = [...qtys].filter(q => +q.value > 0).map(q => {
+      const n = +q.value, p = +q.dataset.price;
+      return `<tr><td>${esc(q.closest('label').firstChild.textContent.trim())}<small>${peso(p)} each</small></td><td>${n}</td><td>${peso(n * p)}</td></tr>`;
+    }).join('');
+    const services = [...form.querySelectorAll('.box:not(.items) input:checked')].map(c => c.parentElement.textContent.trim());
+    summary.innerHTML = `
+      <button class="x no-print" type="button" id="sum-close" aria-label="Close">&times;</button>
+      <div class="receipt">
+        <div class="r-head"><img src="images/logo.png" alt="Fil Solar Depot"><strong>Order Summary</strong><span>${no} · ${now.toLocaleDateString('en-PH', { dateStyle: 'long' })}</span></div>
+        <p class="r-status no-print">Sending your order…</p>
+        <div class="r-cust">
+          <div><span>Name</span>${esc(f.name.value)}</div>
+          <div><span>Mobile</span>${esc(f.phone.value)}</div>
+          <div><span>Email</span>${esc(f.email.value)}</div>
+          <div><span>Delivery Address</span>${esc(f.address.value)}</div>
+        </div>
+        <table><thead><tr><th>Item</th><th>Qty</th><th>Amount</th></tr></thead><tbody>${items}</tbody>
+          <tfoot><tr><td colspan="2">Total</td><td>${peso(total)}</td></tr></tfoot></table>
+        ${services.length ? `<p><span class="r-lbl">Add-On Services</span>${esc(services.join(', '))}</p>` : ''}
+        ${f.notes.value.trim() ? `<p><span class="r-lbl">Notes</span>${esc(f.notes.value)}</p>` : ''}
+        <p class="fine">Prices and availability are confirmed by Fil Solar Depot before delivery.</p>
+      </div>
+      <div class="r-actions no-print">
+        <button class="btn ghost" type="button" id="edit-order">Edit Order</button>
+        <button class="btn alt" type="button" onclick="print()">Save as PDF / Print</button>
+      </div>
+      <div class="r-pay no-print">
+        <h3>Pay for Your Order</h3>
+        <p class="ref">Payment Reference: <b>${no}</b></p>
+        <div class="pay">
+          <button class="btn" type="button" data-pay="pay-qr">Pay via GCash / QR Ph</button>
+          <button class="btn alt" type="button" data-pay="pay-bank">Pay via Bank Transfer</button>
+        </div>
+      </div>`;
+    document.querySelectorAll('.ono').forEach(b => b.textContent = no);
+    document.querySelectorAll('.amt').forEach(s => s.textContent = peso(total));
+    summary.showModal();
+    summary.scrollTop = 0;
+    document.getElementById('sum-close').addEventListener('click', () => summary.close());
+    summary.querySelectorAll('[data-pay]').forEach(b => b.addEventListener('click', () => document.getElementById(b.dataset.pay).showModal()));
+    document.getElementById('edit-order').addEventListener('click', () => summary.close());
+    const status = summary.querySelector('.r-status');
+    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+      .then(r => { if (!r.ok) throw 0; status.textContent = 'Your order has been sent to Fil Solar Depot.'; status.classList.add('ok'); })
+      .catch(() => { status.innerHTML = `We couldn't send your order automatically. Please save it as PDF and email it to <a href="mailto:${PAY_EMAIL}">${PAY_EMAIL}</a>.`; status.classList.add('err'); });
   });
 
   const scenes = document.querySelectorAll('.scene');
@@ -960,16 +1065,8 @@
   form.querySelectorAll('.box:not(.items) input').forEach(c =>
     c.addEventListener('change', () => c.parentElement.classList.toggle('on', c.checked)));
 
-  const PAY_EMAIL = 'admin.lloyd@heandsons.com'; // TBA: confirm address
-  form.querySelectorAll('.pay-email').forEach(a => { a.href = 'mailto:' + PAY_EMAIL; a.textContent = PAY_EMAIL; });
-  form.querySelectorAll('[data-pay]').forEach(b => b.addEventListener('click', () => {
-    if (total === 0) return alert('Please add at least one product.');
-    if (!form.reportValidity()) return;
-    document.getElementById('pay-field').value = b.dataset.pay;
-    form.querySelectorAll('.amt').forEach(s => s.textContent = peso(total));
-    document.getElementById(b.dataset.dialog).showModal();
-  }));
-  form.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
+  document.querySelectorAll('.pay-email').forEach(a => { a.href = 'mailto:' + PAY_EMAIL; a.textContent = PAY_EMAIL; });
+  document.querySelectorAll('#pay-qr [data-close], #pay-bank [data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
 </script>
 </body>
 </html>
