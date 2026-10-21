@@ -150,6 +150,7 @@
   @media (max-width: 500px) { .stats strong { font-size: 1.2rem; } .stats span { font-size: .75rem; } }
 
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+  #products .grid { align-items: start; } /* opening one card's specs must not stretch its row-mates */
   .card { background: var(--soft); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s; }
   .card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(10,42,140,.12); }
   @media (max-width: 600px) { section { padding: 48px 0; } h2 { font-size: 1.6rem; } }
