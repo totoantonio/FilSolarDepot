@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fil Solar Depot</title>
+<meta name="description" content="Fil Solar Depot — solar panels and mounting systems in the Philippines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F7A21B;
+    --red: #E8341C;
+    --blue: #1E5BD8;
+    --navy: #0A2A8C;
+    --ink: #1C1C1E;
+    --gray: #6E6E73;
+    --bg: #FFFFFF;
+    --soft: #F5F5F7;
+    --sun: linear-gradient(90deg, var(--orange), var(--red));
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 17px/1.5 "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: var(--bg); }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; }
+  a { color: var(--blue); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+  section { padding: 64px 0; }
+  h2 { font-size: 2rem; margin: 0 0 8px; color: var(--navy); }
+  .lead { color: var(--gray); margin: 0 0 32px; }
+  .ph { background: #FFF4D6; color: #7A5B00; padding: 0 4px; border-radius: 4px; }
+  section > .wrap > h2, section > .wrap > .lead { text-align: center; }
+  .story { display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; align-items: start; }
+  .story p { margin: 0 0 16px; }
+  .story h3 { margin: 28px 0 8px; color: var(--navy); font-size: 1.2rem; }
+  .facts { background: #fff; border-radius: 16px; padding: 24px; display: grid; gap: 18px; }
+  .facts strong { display: block; font-size: 1.8rem; line-height: 1.1; background: var(--sun); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .facts strong .ph { -webkit-text-fill-color: #7A5B00; }
+  .facts span { color: var(--gray); font-size: .9rem; }
+  .facts ul { margin: 0; padding: 18px 0 0; border-top: 1px solid #E5E5EA; list-style: none; display: grid; gap: 10px; font-size: .95rem; }
+  .facts b { color: var(--navy); }
+  .fact { display: flex; align-items: center; gap: 14px; }
+  .fact > img, .badge { width: 48px; height: 48px; flex: none; }
+  .badge { border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--navy)); color: #fff; display: grid; place-items: center; font-weight: 700; padding: 0; }
+  svg.badge { padding: 4px; box-sizing: border-box; }
+  svg.badge.he, svg.badge.seal { padding: 0; background: none; border-radius: 0; }
+  @media (max-width: 800px) { .story { grid-template-columns: 1fr; gap: 24px; } }
+
+  header { position: sticky; top: 0; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-bottom: 1px solid #E5E5EA; z-index: 10; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  header img { height: 40px; width: auto; }
+  nav a { margin-left: 24px; text-decoration: none; color: var(--ink); font-weight: 500; font-size: .95rem; }
+  nav a:hover { color: var(--blue); }
+  nav .btn { padding: 8px 18px; color: #fff; }
+  @media (max-width: 700px) {
+    header .wrap { flex-wrap: wrap; height: auto; padding-top: 10px; }
+    header img { height: 32px; }
+    nav { width: 100%; display: flex; overflow-x: auto; padding: 8px 0; }
+    nav a { margin: 0 20px 0 0; white-space: nowrap; }
+    nav .btn { display: none; }
+  }
+
+  .hero {
+    color: #fff; padding: 96px 0 112px; overflow: hidden;
+    background:
+      radial-gradient(circle at 88% 12%, rgba(247,162,27,.25), transparent 32%),
+      radial-gradient(circle at 75% 35%, rgba(232,52,28,.2), transparent 45%),
+      linear-gradient(135deg, #04134A, var(--navy) 45%, var(--blue));
+  }
+  .hero .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+  .eyebrow { display: inline-block; font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.75rem); margin: 0 0 16px; line-height: 1.05; letter-spacing: -.02em; }
+  .hero h1 span { background: var(--sun); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { font-size: 1.2rem; opacity: .85; margin: 0 0 32px; max-width: 520px; }
+  .hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .house { margin: 0; justify-self: center; width: 100%; max-width: 480px; }
+  .house svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  /* hero animation: copy fades up, house rises, panels drop onto the roof one by one, then glint */
+  .hero-copy > * { animation: fadeUp .7s ease-out both; }
+  .hero-copy > :nth-child(2) { animation-delay: .1s; }
+  .hero-copy > :nth-child(3) { animation-delay: .2s; }
+  .hero-copy > :nth-child(4) { animation-delay: .3s; }
+  .home { animation: fadeUp .5s ease-out both; }
+  .pv { transform-box: fill-box; animation: drop .4s cubic-bezier(.2,.8,.3,1.15) both, glint .6s ease-out both; animation-delay: calc(.4s + var(--i) * .08s), calc(1.2s + var(--i) * .05s); }
+  .sun-glow { transform-box: fill-box; transform-origin: center; animation: pulse 3s ease-in-out infinite; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } }
+  @keyframes drop { from { opacity: 0; transform: translateY(-180px); } 50% { opacity: 1; } to { opacity: 1; transform: none; } }
+  @keyframes glint { 50% { filter: brightness(1.9); } }
+  @keyframes pulse { 50% { transform: scale(1.15); opacity: .7; } }
+
+  /* sun rises on the left, arcs over the house, sets on the right, loops */
+  /* true arc: rotate the sun around a point below the house (200,300), radius 265 */
+  .sun { transform-origin: 200px 300px; animation: sunArc 8s linear infinite; }
+  @keyframes sunArc {
+    0%   { transform: rotate(-80deg); opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { transform: rotate(80deg); opacity: 0; }
+  }
+
+  /* scenes swap house <-> business every 5s (JS); display:none restarts each scene's animations */
+  .scene.off { display: none; }
+
+  /* crew: one carries a panel back and forth, one hammers a crate */
+  .crew { animation: fadeUp .5s ease-out .5s both; }
+  .walk { animation: walk 2.5s ease-in-out infinite alternate; }
+  .bob { animation: bob .35s ease-in-out infinite alternate; }
+  .swing { animation: swing .5s ease-in-out infinite alternate; }
+  @keyframes walk { to { transform: translateX(70px); } }
+  @keyframes bob { to { transform: translateY(-2px); } }
+  @keyframes swing { from { transform: rotate(-50deg); } to { transform: rotate(25deg); } }
+  @media (prefers-reduced-motion: reduce) { .hero *, .hero-copy > * { animation: none !important; } }
+  .btn { display: inline-block; background: var(--sun); color: #fff; padding: 14px 28px; border-radius: 999px; font-weight: 600; text-decoration: none; border: 0; font-size: 1rem; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(232,52,28,.35); }
+  .btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,.5); }
+  .btn.ghost:hover { box-shadow: none; background: rgba(255,255,255,.1); }
+  @media (max-width: 800px) {
+    .hero { padding: 48px 0 56px; text-align: center; }
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero p { margin-inline: auto; }
+    .hero .actions { justify-content: center; }
+    .house { max-width: 320px; }
+  }
+
+  .stats { background: var(--ink); color: #fff; padding: 28px 0; }
+  .stats .wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
+  .stats strong { display: block; font-size: 1.6rem; background: var(--sun); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stats span { font-size: .85rem; color: #AEAEB2; }
+  @media (max-width: 500px) { .stats strong { font-size: 1.2rem; } .stats span { font-size: .75rem; } }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+  .card { background: var(--soft); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(10,42,140,.12); }
+  @media (max-width: 600px) { section { padding: 48px 0; } h2 { font-size: 1.6rem; } }
+  form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { form .row { grid-template-columns: 1fr; } }
+  .card img { background: #fff; height: 220px; width: 100%; object-fit: contain; }
+  .card div { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .card h3 { margin: 0 0 4px; font-size: 1.1rem; }
+  .card .price { color: var(--red); font-weight: 700; margin: 0 0 12px; }
+  .card ul { padding-left: 18px; margin: 8px 0 0; font-size: .9rem; color: var(--gray); }
+  .card summary { cursor: pointer; color: var(--blue); font-weight: 500; margin-top: auto; }
+
+  .center { text-align: center; }
+  .center .lead { max-width: 640px; margin-inline: auto; }
+  .service { background: #fff; border: 1px solid #E5E5EA; border-radius: 16px; padding: 24px; position: relative; }
+  .service h3 { margin: 0 0 6px; font-size: 1.05rem; color: var(--navy); }
+  .service p { margin: 0; color: var(--gray); font-size: .95rem; }
+  .tag { position: absolute; top: 20px; right: 20px; background: var(--sun); color: #fff; font-size: .7rem; font-weight: 700; letter-spacing: .06em; padding: 3px 10px; border-radius: 999px; }
+  .num { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--blue), var(--navy)); color: #fff; display: grid; place-items: center; font-weight: 700; margin-bottom: 14px; }
+
+  /* Why Us cards: fade up one by one when scrolled into view (JS adds .reveal/.in), lift on hover */
+  .reveal .service { opacity: 0; transform: translateY(24px); transition: opacity .5s ease-out, transform .5s ease-out, box-shadow .2s, border-color .3s; transition-delay: calc(var(--d) * 70ms); }
+  .reveal.in .service { opacity: 1; transform: none; }
+  .reveal.in .service:hover { transform: translateY(-4px); transition-delay: 0s; box-shadow: 0 16px 40px rgba(247,162,27,.28); }
+  .reveal.in .service:hover .num { transform: rotate(-8deg) scale(1.1); box-shadow: 0 0 18px rgba(247,162,27,.8); }
+  .num { transition: transform .2s, box-shadow .2s; }
+
+  /* power grid: dashed wire links the cards in order; a spark runs along it and lights each card it reaches (JS) */
+  #services .grid { position: relative; }
+  .wire { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .wire path { fill: none; stroke-width: 2; stroke-linejoin: round; }
+  .wire .base { stroke: #D1D1D6; stroke-dasharray: 4 5; }
+  .wire .live { stroke: var(--orange); }
+  .wire circle { fill: #FFD66B; filter: drop-shadow(0 0 4px #F7A21B) drop-shadow(0 0 10px #E8341C); }
+  .service.lit { border-color: var(--orange); }
+  .service.lit .num { background: var(--sun); box-shadow: 0 0 16px rgba(247,162,27,.6); }
+
+  #why-panels { background: linear-gradient(135deg, #04134A, var(--navy)); color: #fff; }
+  #why-panels h2 { color: #fff; }
+  #why-panels .lead { color: #AEAEB2; }
+  #why-panels .service { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); }
+  #why-panels .service h3 { color: var(--orange); }
+  #why-panels .service p { color: #D1D1D6; }
+
+  .cta { text-align: center; margin-top: 40px; }
+
+  #about { background: var(--soft); }
+  #about p { max-width: 720px; }
+
+  /* every form title sits above its box, styled like a field label */
+  .group { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .group legend { float: left; width: 100%; padding: 0; margin-bottom: 6px; font-weight: 500; }
+  .group legend small { font-weight: 400; color: var(--gray); font-size: .85rem; margin-left: 6px; }
+  .box { border: 1px solid #D1D1D6; border-radius: 10px; padding: 8px 16px; display: grid; gap: 4px; }
+  form, form .col { display: grid; gap: 16px; align-content: start; }
+  @media (min-width: 900px) {
+    form { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .cart { position: sticky; top: 88px; }
+    .items { background: var(--soft); border: 0; padding: 12px 24px 20px; }
+  }
+  label { font-weight: 500; display: grid; gap: 6px; }
+  input, select, textarea { font: inherit; padding: 12px; border: 1px solid #D1D1D6; border-radius: 10px; }
+  input, select, textarea { width: 100%; min-width: 0; }
+  fieldset { border: 1px solid #D1D1D6; border-radius: 10px; padding: 12px 16px; display: grid; gap: 4px; min-width: 0; margin: 0; }
+  fieldset label { display: flex; gap: 10px; font-weight: 400; align-items: center; min-height: 44px; }
+  fieldset input[type=radio], fieldset input[type=checkbox] { width: 20px; height: 20px; flex: none; accent-color: var(--blue); }
+  @media (max-width: 600px) {
+    form .btn { width: 100%; }
+    fieldset { padding: 8px 12px; }
+    .items label { font-size: .95rem; }
+  }
+
+  .items label { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 12px; padding: 10px 0; border-bottom: 1px solid #E5E5EA; font-weight: 500; }
+  .items label small { grid-row: 2; color: var(--red); font-weight: 600; }
+  .items input { grid-column: 2; grid-row: 1 / 3; width: 80px; text-align: center; align-self: center; }
+  .total { display: flex; justify-content: space-between; align-items: baseline; margin: 8px 0 0; font-size: 1.1rem; font-weight: 600; }
+  .total strong { font-size: 1.6rem; color: var(--navy); }
+
+  .pay { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .pay .btn { width: 100%; padding: 14px 12px; }
+  .btn.alt { background: linear-gradient(135deg, var(--blue), var(--navy)); }
+  @media (max-width: 500px) { .pay { grid-template-columns: 1fr; } }
+
+  dialog { border: 0; border-radius: 20px; padding: 28px; width: calc(100% - 32px); max-width: 460px; max-height: calc(100% - 32px); color: var(--ink); }
+  dialog::backdrop { background: rgba(4,19,74,.6); backdrop-filter: blur(4px); }
+  dialog h3 { margin: 0 0 16px; color: var(--navy); text-align: center; }
+  .qr { width: 220px; height: 220px; margin: 0 auto 16px; border: 2px dashed #D1D1D6; border-radius: 16px; display: grid; place-items: center; }
+  .due { text-align: center; margin: 0 0 12px; }
+  .due strong { color: var(--red); font-size: 1.3rem; }
+  dialog ol { padding-left: 20px; margin: 0 0 20px; font-size: .95rem; display: grid; gap: 6px; }
+  .bank { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; background: var(--soft); padding: 16px; border-radius: 12px; margin: 0 0 16px; }
+  .bank dt { color: var(--gray); }
+  .bank dd { margin: 0; font-weight: 600; }
+  .dlg-actions { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; }
+  dialog .btn.ghost { border-color: #D1D1D6; color: var(--ink); }
+
+  footer { background: var(--ink); color: #D1D1D6; padding: 40px 0; font-size: .9rem; }
+  footer a { color: #fff; text-decoration: none; }
+  footer a:hover { color: var(--orange); }
+  .foot { display: grid; grid-template-columns: 1.4fr 1.2fr 1fr; gap: 40px; }
+  .foot p { margin: 0 0 10px; }
+  .foot h4 { color: #fff; margin: 0 0 14px; font-size: 1rem; }
+  .foot-logo { height: 32px; width: auto; background: #fff; padding: 6px 10px; border-radius: 8px; margin-bottom: 14px; }
+  .lbl { display: block; font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: #8E8E93; }
+  .copy { border-top: 1px solid #3A3A3C; margin: 32px 0 0; padding-top: 20px; font-size: .8rem; color: #8E8E93; }
+  @media (max-width: 700px) { .foot { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* ===== Google / Material 3 polish for the order form ===== */
+  :root { --surface: #F0F4F9; --outline: #C4C7C5; --muted: #444746; --tonal: #D3E3FD; --on-tonal: #041E49; }
+  form .col { gap: 20px; }
+  label, .group legend { font-size: .9rem; color: var(--muted); }
+  input:not([type=checkbox]), textarea { height: 56px; padding: 0 16px; border: 1px solid var(--outline); border-radius: 12px; background: #fff; color: var(--ink); transition: border-color .15s, box-shadow .15s; }
+  textarea { height: auto; padding: 16px; resize: vertical; }
+  input:not([type=checkbox]):hover, textarea:hover { border-color: #747775; }
+  input:not([type=checkbox]):focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+
+  /* cart: tonal surface card, steppers, clean total */
+  .items { background: var(--surface); border: 0; border-radius: 24px; padding: 8px 24px 24px; }
+  .items label { padding: 16px 0; border-bottom-color: #DDE3EA; color: var(--ink); font-size: 1rem; }
+  .items label small { color: var(--muted); font-weight: 400; font-size: .9rem; }
+  .qty { grid-column: 2; grid-row: 1 / 3; align-self: center; display: flex; align-items: center; background: #fff; border: 1px solid var(--outline); border-radius: 999px; }
+  .qty button { width: 40px; height: 40px; border: 0; border-radius: 50%; background: none; color: var(--blue); font-size: 1.25rem; cursor: pointer; }
+  .qty button:hover { background: #E8F0FE; }
+  .items .qty input { width: 40px; height: 40px; padding: 0; border: 0; box-shadow: none; background: none; text-align: center; -moz-appearance: textfield; appearance: textfield; }
+  .qty input::-webkit-inner-spin-button, .qty input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .total { margin-top: 16px; font-weight: 500; color: var(--muted); }
+  .total strong { color: var(--ink); font-size: 1.75rem; font-weight: 600; }
+
+  /* buttons: flat pills with Google-style elevation on hover */
+  .btn { font-weight: 500; }
+  .btn:hover { transform: none; box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 1px 3px 1px rgba(0,0,0,.15); }
+  .pay .btn { height: 48px; padding: 0 16px; }
+
+  /* add-on services as filter chips */
+  .box:not(.items) { border: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .box:not(.items) label { min-height: 40px; padding: 0 16px; gap: 8px; border: 1px solid var(--outline); border-radius: 8px; font-size: .9rem; color: var(--muted); cursor: pointer; user-select: none; transition: background .15s; }
+  .box:not(.items) label:hover { background: rgba(68,71,70,.08); }
+  .box:not(.items) input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .box:not(.items) label:has(input:checked) { background: var(--tonal); border-color: transparent; color: var(--on-tonal); }
+  .box:not(.items) label:has(input:checked)::before { content: "✓"; font-weight: 700; }
+  .box:not(.items) label:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  /* dialogs: M3 extra-large radius */
+  dialog { border-radius: 28px; padding: 24px; }
+
+  @media (max-width: 600px) { .items { padding: 4px 16px 20px; border-radius: 20px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="#"><img src="images/logo.png" alt="Fil Solar Depot"></a>
+    <nav>
+      <a href="#services">Why Us</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#order">Order</a>
+      <a href="#contact">Contact</a>
+      <a class="btn" href="#order">Order Now</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">Solar Panels &amp; Mounting Systems</span>
+      <h1>Power Your Home and Business with <span>the SUN.</span></h1>
+      <p>High-efficiency bifacial panels from Canadian Solar, Jinko, and Hestia. Free consultation, site survey, and installation.</p>
+      <div class="actions">
+        <a class="btn" href="#order">Order Now</a>
+        <a class="btn ghost" href="#products">View Products</a>
+      </div>
+    </div>
+    <figure class="house">
+      <svg viewBox="0 0 400 310" role="img" aria-label="Solar panels being installed on a house and an office building">
+        <defs>
+          <pattern id="cells" width="7" height="9" patternUnits="userSpaceOnUse">
+            <rect width="7" height="9" fill="#0B2A6F"/><path d="M0 0H7M0 0V9" stroke="#4C7BE0" stroke-width=".5"/>
+          </pattern>
+          <pattern id="win" width="20" height="22" patternUnits="userSpaceOnUse">
+            <rect x="4" y="4" width="12" height="14" rx="1" fill="#9CC3FF"/>
+          </pattern>
+          <g id="worker">
+            <path d="M-3 -9V0M3 -9V0" stroke="#1C1C1E" stroke-width="3" stroke-linecap="round"/>
+            <rect x="-5" y="-21" width="10" height="13" rx="3" fill="#1E5BD8"/>
+            <path d="M-5 -16H5" stroke="#F7A21B" stroke-width="2"/>
+            <circle cy="-25.5" r="4.5" fill="#E0AC69"/>
+            <path d="M-6 -27.5a6 6 0 0 1 12 0z" fill="#F7A21B"/>
+            <rect x="-7.5" y="-28.5" width="15" height="2" rx="1" fill="#F7A21B"/>
+          </g>
+          <g id="carrier">
+            <rect x="-13" y="-48" width="26" height="9" fill="url(#cells)" stroke="#D1D1D6"/>
+            <path d="M-4 -19L-8 -39M4 -19L8 -39" stroke="#E0AC69" stroke-width="2.5" stroke-linecap="round"/>
+            <use href="#worker"/>
+          </g>
+          <radialGradient id="glow"><stop offset="0" stop-color="#F7A21B" stop-opacity=".9"/><stop offset="1" stop-color="#F7A21B" stop-opacity="0"/></radialGradient>
+        </defs>
+        <g class="sun">
+          <circle class="sun-glow" cx="200" cy="35" r="60" fill="url(#glow)"/>
+          <circle cx="200" cy="35" r="22" fill="#FFC23D"/>
+        </g>
+        <g class="scene">
+        <g class="home">
+          <rect x="0" y="288" width="400" height="22" rx="6" fill="#fff" fill-opacity=".08"/>
+          <rect x="78" y="185" width="244" height="105" fill="#F2F2F7"/>
+          <polygon points="100,95 300,95 340,185 60,185" fill="#2C2C2E"/>
+          <rect x="52" y="182" width="296" height="8" rx="2" fill="#1C1C1E"/>
+          <rect x="105" y="212" width="50" height="40" rx="3" fill="#9CC3FF"/>
+          <rect x="245" y="212" width="50" height="40" rx="3" fill="#9CC3FF"/>
+          <path d="M130 212V252M105 232H155M270 212V252M245 232H295" stroke="#fff" stroke-width="2"/>
+          <rect x="182" y="225" width="36" height="65" rx="3" fill="#E8341C"/>
+        </g>
+        <g fill="url(#cells)" stroke="#D1D1D6" stroke-width="1.2">
+          <polygon class="pv" style="--i:0" points="107.9,103.0 151.7,103.0 143.5,140.0 91.5,140.0"/>
+          <polygon class="pv" style="--i:1" points="154.7,103.0 198.5,103.0 198.5,140.0 146.5,140.0"/>
+          <polygon class="pv" style="--i:2" points="201.5,103.0 245.3,103.0 253.5,140.0 201.5,140.0"/>
+          <polygon class="pv" style="--i:3" points="248.3,103.0 292.1,103.0 308.5,140.0 256.5,140.0"/>
+          <polygon class="pv" style="--i:4" points="89.7,144.0 142.6,144.0 134.4,181.0 73.3,181.0"/>
+          <polygon class="pv" style="--i:5" points="145.6,144.0 198.5,144.0 198.5,181.0 137.4,181.0"/>
+          <polygon class="pv" style="--i:6" points="201.5,144.0 254.4,144.0 262.6,181.0 201.5,181.0"/>
+          <polygon class="pv" style="--i:7" points="257.4,144.0 310.3,144.0 326.7,181.0 265.6,181.0"/>
+        </g>
+        <g class="crew">
+          <path d="M35 288L58 183M47 288L70 183M38 274H50M42 253H54M45 232H57M49 211H61M52 192H64" stroke="#AEAEB2" stroke-width="2.5" stroke-linecap="round"/>
+          <g transform="translate(95 288)">
+            <g class="walk"><g class="bob"><use href="#carrier"/></g></g>
+          </g>
+          <g transform="translate(255 288)">
+            <rect x="12" y="-12" width="24" height="12" rx="1" fill="#8B5A2B"/>
+            <use href="#worker"/>
+            <g transform="translate(4 -18)"><g class="swing">
+              <path d="M0 0L9 6" stroke="#E0AC69" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M9 6L13 -2" stroke="#6E6E73" stroke-width="2"/>
+              <rect x="10" y="-5" width="7" height="4" rx="1" fill="#3A3A3C"/>
+            </g></g>
+          </g>
+        </g>
+        </g>
+
+        <g class="scene off">
+        <g class="home">
+          <rect x="0" y="288" width="400" height="22" rx="6" fill="#fff" fill-opacity=".08"/>
+          <rect x="110" y="110" width="180" height="180" fill="#E5E5EA"/>
+          <rect x="122" y="150" width="156" height="96" fill="url(#win)"/>
+          <rect x="150" y="122" width="100" height="16" rx="3" fill="#0A2A8C"/>
+          <rect x="178" y="252" width="44" height="36" rx="2" fill="#1E5BD8"/>
+          <path d="M200 252V288" stroke="#fff" stroke-width="1.5"/>
+          <rect x="104" y="104" width="192" height="8" rx="2" fill="#3A3A3C"/>
+          <rect x="290" y="180" width="72" height="110" fill="#D1D1D6"/>
+          <rect x="296" y="196" width="60" height="66" fill="url(#win)"/>
+          <rect x="286" y="176" width="80" height="6" rx="2" fill="#3A3A3C"/>
+        </g>
+        <g fill="url(#cells)" stroke="#D1D1D6" stroke-width="1.2">
+          <polygon class="pv" style="--i:0" points="116,104 154,104 162,84 124,84"/>
+          <polygon class="pv" style="--i:1" points="160,104 198,104 206,84 168,84"/>
+          <polygon class="pv" style="--i:2" points="204,104 242,104 250,84 212,84"/>
+          <polygon class="pv" style="--i:3" points="248,104 286,104 294,84 256,84"/>
+          <polygon class="pv" style="--i:4" points="294,176 324,176 330,161 300,161"/>
+          <polygon class="pv" style="--i:5" points="328,176 358,176 364,161 334,161"/>
+        </g>
+        <g class="crew">
+          <g transform="translate(40 288)">
+            <g class="walk"><g class="bob"><use href="#carrier"/></g></g>
+          </g>
+          <g transform="translate(330 288)">
+            <rect x="12" y="-12" width="24" height="12" rx="1" fill="#8B5A2B"/>
+            <use href="#worker"/>
+            <g transform="translate(4 -18)"><g class="swing">
+              <path d="M0 0L9 6" stroke="#E0AC69" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M9 6L13 -2" stroke="#6E6E73" stroke-width="2"/>
+              <rect x="10" y="-5" width="7" height="4" rx="1" fill="#3A3A3C"/>
+            </g></g>
+          </g>
+        </g>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="wrap">
+    <div><strong>Up to 650W</strong><span>per panel</span></div>
+    <div><strong>Up to 24.1%</strong><span>module efficiency</span></div>
+    <div><strong>N-type</strong><span>TOPCon cells</span></div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="center">
+      <h2>Why Fil Solar Depot?</h2>
+      <p class="lead">We don't just sell panels. We handle everything from the first site visit to after-sales support, so going solar is simple and stress-free.</p>
+    </div>
+    <div class="grid">
+      <div class="service"><span class="tag">FREE</span><div class="num">1</div><h3>Consultation</h3><p>Talk to our solar specialists about your power bill, goals, and budget. No pressure, no obligation.</p></div>
+      <div class="service"><span class="tag">FREE</span><div class="num">2</div><h3>Site Survey</h3><p>We visit your home or business to check roof condition, orientation, shading, and electrical setup.</p></div>
+      <div class="service"><span class="tag">FREE</span><div class="num">3</div><h3>System Design &amp; Quote</h3><p>A system sized to your actual consumption, with a clear quote and estimated savings and payback period.</p></div>
+      <div class="service"><span class="tag">FREE</span><div class="num">4</div><h3>Installation</h3><p>Our trained team mounts, wires, and tests your system safely and cleanly, ready to produce power.</p></div>
+      <div class="service"><div class="num">5</div><h3>Net Metering Assistance</h3><p>We help you with the paperwork to sell excess power back to your local utility.</p></div>
+      <div class="service"><div class="num">6</div><h3>Delivery</h3><p>Panels and mounting hardware delivered straight to your site, handled with care.</p></div>
+      <div class="service"><div class="num">7</div><h3>Warranty Support</h3><p>We file and follow up on manufacturer warranty claims for you, so you never deal with it alone.</p></div>
+      <div class="service"><div class="num">8</div><h3>Maintenance &amp; Cleaning</h3><p>Scheduled panel cleaning and system check-ups to keep output at its best year after year.</p></div>
+    </div>
+    <div class="cta"><a class="btn" href="#order">Book a Free Consultation</a></div>
+  </div>
+</section>
+
+<section id="why-panels">
+  <div class="wrap">
+    <div class="center">
+      <h2>Why Our Panels</h2>
+      <p class="lead">Every panel we carry is bifacial N-type from a recognized global brand, chosen to produce more power from the same roof space.</p>
+    </div>
+    <div class="grid">
+      <div class="service"><h3>Power from Both Sides</h3><p>Bifacial panels also capture sunlight reflected onto their back, adding extra output on light-colored roofs and open ground.</p></div>
+      <div class="service"><h3>N-Type TOPCon Cells</h3><p>Newer cell technology with higher efficiency, slower aging, and better performance in hot weather than older P-type panels.</p></div>
+      <div class="service"><h3>Dual-Glass Durability</h3><p>Glass on the front and back protects the cells from moisture, heat, and wear for a longer working life.</p></div>
+      <div class="service"><h3>Long Warranties</h3><p>Backed by manufacturer warranties of up to 15 years on the product and 30 years on power output.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="products">
+  <div class="wrap">
+    <h2>Products</h2>
+    <p class="lead">Bifacial N-type panels from trusted brands.</p>
+    <div class="grid">
+
+      <article class="card">
+        <img src="images/canadian-625.png" alt="Canadian Solar 625W bifacial panel">
+        <div>
+          <h3>Canadian Solar 625W Bifacial</h3>
+          <p class="price"><span class="ph">₱ Price TBA</span></p>
+          <details>
+            <summary>Specifications</summary>
+            <ul>
+              <li>Model: CS6.2-66TB-625, long cable</li>
+              <li>Rated power: 625W</li>
+              <li>N-type TOPCon, 132 cells</li>
+              <li>Efficiency: up to 23.1–23.3%</li>
+              <li>Voc: ~48.4–48.6V · Isc: ~16.08–16.14A</li>
+              <li>Bifaciality: up to 80–85%</li>
+              <li>2382 × 1134 × 30 mm · 32.8 kg</li>
+              <li>IP68 junction box, standard PV cables</li>
+              <li>Max system voltage: 1500V (IEC/UL)</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/jinko-590.png" alt="Jinko Solar 590W bifacial panel">
+        <div>
+          <h3>Jinko Solar 590W Bifacial</h3>
+          <p class="price"><span class="ph">₱ Price TBA</span></p>
+          <details>
+            <summary>Specifications</summary>
+            <ul>
+              <li>590W front side, up to 30% extra bifacial gain</li>
+              <li>N-type TOPCon, SMBB, HOT 2.0</li>
+              <li>Efficiency: ~22.07–22.84%</li>
+              <li>2278 × 1134 × 30 mm · 31.0 kg</li>
+              <li>Dual glass, anodized aluminum frame</li>
+              <li>Operating temp: −40°C to +85°C</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/hestia-650.png" alt="Hestia 650W bifacial double-glass panel">
+        <div>
+          <h3>Hestia 650W Bifacial Double Glass</h3>
+          <p class="price"><span class="ph">₱ Price TBA</span></p>
+          <details>
+            <summary>Specifications</summary>
+            <ul>
+              <li>Max power: 650W, mono</li>
+              <li>Efficiency: up to 24.1%</li>
+              <li>132 half-cells, N-type TOPCon/BC</li>
+              <li>2382 × 1134 × 30 mm</li>
+              <li>Dual glass</li>
+              <li>15-yr product / 30-yr linear performance warranty</li>
+            </ul>
+          </details>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/rail.png" alt="Aluminum solar mounting rail">
+        <div>
+          <h3>Aluminum Mounting Rail</h3>
+          <p class="price"><span class="ph">₱ Price TBA</span></p>
+          <details>
+            <summary>Specifications</summary>
+            <ul>
+              <li><span class="ph">Brand, length, and specs TBA</span></li>
+            </ul>
+          </details>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <h2>Our Story</h2>
+    <p class="lead">Solar you can trust, from a name you already know.</p>
+    <div class="story">
+      <div>
+        <p>Electricity keeps getting more expensive, and every rate hike and brownout lands on the same people: the family checking the bill at the end of the month, the store owner running a generator just to keep the freezer cold. <strong>Fil Solar Depot</strong> exists to give them a way out: clean power from their own roof, at a price the sun will never raise.</p>
+        <p>We carry only high-efficiency bifacial N-type panels from brands with a global track record. We survey your site before we quote, size the system to your actual consumption, and install it with our own crew.</p>
+        <h3>Backed by 50 Years in the Energy Business</h3>
+        <p>Fil Solar Depot is backed by HE &amp; SONS, a company that has served Filipino customers for 50 years as a Chevron distributor and the company behind the Blu Energy gasoline station chain. Half a century of keeping vehicles, farms, and businesses running has built a reputation for reliability, and Fil Solar Depot carries that same standard to every rooftop.</p>
+        <h3>A Trained, Accredited Team</h3>
+        <p>Our installers are experienced professionals trained and accredited by TESDA in solar installation. Every system is mounted, wired, and tested to standard by people who know exactly what they're doing.</p>
+        <h3>Our Name Is on It</h3>
+        <p>Every installation we do is covered by our workmanship warranty, on top of the manufacturer warranty on your panels. We don't hand you off once the job is done. If something needs attention, we come back and make it right.</p>
+      </div>
+      <aside class="facts">
+        <div class="fact"><svg class="badge he" viewBox="0 0 48 48" role="img" aria-label="HE &amp; SONS Corporation logo"><circle cx="24" cy="24" r="23" fill="#fff" stroke="#E5E5EA"/><rect x="13.5" y="13" width="14" height="18" fill="#3B8A4E"/><g font-size="8" font-weight="700" fill="#2E3A87"><text x="13.5" y="29.5" text-anchor="end">he</text><text x="20.5" y="29.5" text-anchor="middle" fill="#fff">and</text><text x="27.5" y="29.5">sons</text></g><text x="24" y="35.5" text-anchor="middle" font-size="3.2" letter-spacing=".9" fill="#2E3A87">CORPORATION</text></svg><div><strong>50 Years</strong><span>of HE &amp; SONS in the energy business</span></div></div>
+        <div class="fact"><img src="images/tesda.svg" alt="TESDA seal" width="48" height="48"><div><strong>TESDA</strong><span>trained and accredited solar installers</span></div></div>
+        <div class="fact"><svg class="badge seal" viewBox="0 0 48 48" role="img" aria-label="Warranty seal"><defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7A21B"/><stop offset="1" stop-color="#E8341C"/></linearGradient><path id="arc" d="M11 24a13 13 0 0 1 26 0"/></defs><polygon fill="url(#gold)" points="24.0,1.0 26.7,3.7 30.0,1.8 31.8,5.1 35.5,4.1 36.5,7.7 40.3,7.7 40.3,11.5 43.9,12.5 42.9,16.2 46.2,18.0 44.3,21.3 47.0,24.0 44.3,26.7 46.2,30.0 42.9,31.8 43.9,35.5 40.3,36.5 40.3,40.3 36.5,40.3 35.5,43.9 31.8,42.9 30.0,46.2 26.7,44.3 24.0,47.0 21.3,44.3 18.0,46.2 16.2,42.9 12.5,43.9 11.5,40.3 7.7,40.3 7.7,36.5 4.1,35.5 5.1,31.8 1.8,30.0 3.7,26.7 1.0,24.0 3.7,21.3 1.8,18.0 5.1,16.2 4.1,12.5 7.7,11.5 7.7,7.7 11.5,7.7 12.5,4.1 16.2,5.1 18.0,1.8 21.3,3.7"/><circle cx="24" cy="24" r="17" fill="#0A2A8C"/><circle cx="24" cy="24" r="15.5" fill="none" stroke="#F7A21B" stroke-width=".6"/><text font-size="4.6" font-weight="700" letter-spacing=".5" fill="#fff"><textPath href="#arc" startOffset="50%" text-anchor="middle">WARRANTY</textPath></text><path d="M18.5 28l3.5 3.5 7.5-8" fill="none" stroke="#F7A21B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Warranty</strong><span>on our workmanship, plus up to 30 years from the manufacturer <span class="ph">workmanship term TBA</span></span></div></div>
+        <ul>
+          <li><b>Chevron Distributor.</b> Part of a trusted energy group.</li>
+          <li><b>Blu Energy Stations.</b> A name customers already know.</li>
+          <li><b>Our Own Crew.</b> Surveyed first, quoted once, installed right.</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="order">
+  <div class="wrap">
+    <div class="center">
+      <h2>Order Form</h2>
+      <p class="lead">Send your order and we'll confirm availability, delivery, and the total within 24 hours.</p>
+    </div>
+    <!-- ponytail: Formspree emails each order; swap YOUR_FORM_ID after signing up at formspree.io -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="col">
+      <fieldset class="group cart">
+        <legend>Products <small>Set a quantity for each item</small></legend>
+        <div class="box items">
+        <!-- prices are SAMPLES until the company confirms: edit data-price and the ₱ text together -->
+        <label>Canadian Solar 625W Bifacial <small>₱9,500 / panel</small><input name="Canadian Solar 625W" type="number" min="0" value="0" data-price="9500"></label>
+        <label>Jinko Solar 590W Bifacial <small>₱8,500 / panel</small><input name="Jinko Solar 590W" type="number" min="0" value="0" data-price="8500"></label>
+        <label>Hestia 650W Bifacial <small>₱10,500 / panel</small><input name="Hestia 650W" type="number" min="0" value="0" data-price="10500"></label>
+        <label>Aluminum Mounting Rail <small>₱1,200 / piece</small><input name="Mounting Rail" type="number" min="0" value="0" data-price="1200"></label>
+        <label>Lithium Battery 5kWh <small>₱45,000 / unit</small><input name="Battery 5kWh" type="number" min="0" value="0" data-price="45000"></label>
+        <label>Hybrid Inverter 6kW <small>₱55,000 / unit</small><input name="Inverter 6kW" type="number" min="0" value="0" data-price="55000"></label>
+        <p class="total">Total <strong id="total">₱0</strong></p>
+        <input type="hidden" name="Order total" id="total-field" value="₱0">
+        <input type="hidden" name="Payment method" id="pay-field">
+        <div class="pay">
+          <button class="btn" type="button" data-pay="GCash / QR Ph" data-dialog="pay-qr">Pay via GCash / QR Ph</button>
+          <button class="btn alt" type="button" data-pay="Bank transfer" data-dialog="pay-bank">Pay via Bank Transfer</button>
+        </div>
+        </div>
+      </fieldset>
+      </div>
+      <div class="col">
+      <label>Full Name <input name="name" required autocomplete="name"></label>
+      <div class="row">
+        <label>Mobile Number <input name="phone" type="tel" required autocomplete="tel"></label>
+        <label>Email <input name="email" type="email" required autocomplete="email"></label>
+      </div>
+      <label>Delivery Address <textarea name="address" rows="2" required autocomplete="street-address"></textarea></label>
+      <fieldset class="group">
+        <legend>Add-On Services <small>Optional</small></legend>
+        <div class="box">
+        <label><input type="checkbox" name="Free consultation" value="Yes"> Free Consultation</label>
+        <label><input type="checkbox" name="Free site survey" value="Yes"> Free Site Survey</label>
+        <label><input type="checkbox" name="Free installation" value="Yes"> Free Installation</label>
+        <label><input type="checkbox" name="Net metering assistance" value="Yes"> Net Metering Assistance</label>
+        <label><input type="checkbox" name="Maintenance & cleaning" value="Yes"> Maintenance &amp; Cleaning</label>
+        </div>
+      </fieldset>
+      <label>Notes <textarea name="notes" rows="3"></textarea></label>
+      </div>
+
+      <dialog id="pay-qr">
+        <h3>Pay via GCash / QR Ph</h3>
+        <div class="qr"><span class="ph">QR Code Here</span></div>
+        <p class="due">Amount to Pay: <strong class="amt"></strong></p>
+        <ol>
+          <li>Open GCash, Maya, or any bank app that supports QR Ph, and tap <b>Scan QR</b>.</li>
+          <li>Scan the code above.</li>
+          <li>Enter the exact amount shown and confirm the payment.</li>
+          <li>Take a screenshot of your payment receipt.</li>
+          <li>Email the screenshot with your full name and mobile number to <a class="pay-email"></a>.</li>
+          <li>Tap <b>Send Order</b> below.</li>
+        </ol>
+        <div class="dlg-actions">
+          <button class="btn ghost" type="button" data-close>Back</button>
+          <button class="btn" type="submit">Send Order</button>
+        </div>
+      </dialog>
+
+      <dialog id="pay-bank">
+        <h3>Pay via Bank Transfer</h3>
+        <dl class="bank">
+          <dt>Bank</dt><dd><span class="ph">BDO Unibank</span></dd>
+          <dt>Account Name</dt><dd><span class="ph">HE &amp; SONS</span></dd>
+          <dt>Account Number</dt><dd><span class="ph">0012 3456 7890</span></dd>
+          <dt>Branch</dt><dd><span class="ph">Cagayan de Oro – Divisoria</span></dd>
+        </dl>
+        <p class="due">Amount to Pay: <strong class="amt"></strong></p>
+        <ol>
+          <li>Transfer the exact amount via online banking (InstaPay or PESONet) or deposit over the counter.</li>
+          <li>Put your full name in the reference or notes field.</li>
+          <li>Take a screenshot of the confirmation, or a photo of your deposit slip.</li>
+          <li>Email it with your full name and mobile number to <a class="pay-email"></a>.</li>
+          <li>Tap <b>Send Order</b> below.</li>
+        </ol>
+        <div class="dlg-actions">
+          <button class="btn ghost" type="button" data-close>Back</button>
+          <button class="btn" type="submit">Send Order</button>
+        </div>
+      </dialog>
+    </form>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <img src="images/logo.png" alt="Fil Solar Depot" class="foot-logo">
+        <p>Solar panels, mounting systems, and installation by a TESDA-trained team. Backed by HE &amp; SONS.</p>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <!-- TBA: replace placeholders and the tel:/mailto: links -->
+        <p><span class="lbl">Phone</span><a href="tel:+630000000000">+63 900 000 0000</a></p>
+        <p><span class="lbl">Email</span><a href="mailto:info@filsolardepot.com">info@filsolardepot.com</a></p>
+        <p><span class="lbl">Address</span>Street, Barangay, City, Province</p>
+        <p><span class="lbl">Hours</span>Mon–Sat, 8:00 AM – 5:00 PM</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <p><a href="#services">Why Us</a></p>
+        <p><a href="#products">Products</a></p>
+        <p><a href="#about">Our Story</a></p>
+        <p><a href="#order">Order Now</a></p>
+      </div>
+    </div>
+    <p class="copy">© 2026 Fil Solar Depot. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const form = document.querySelector('#order form');
+  const qtys = form.querySelectorAll('[data-price]');
+
+  // − / + steppers around each quantity box; label's `for` keeps label clicks on the input, not the − button
+  qtys.forEach((q, i) => {
+    q.id = 'qty' + i;
+    q.closest('label').htmlFor = q.id;
+    const step = (txt, d) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = txt;
+      b.setAttribute('aria-label', (d > 0 ? 'Add one ' : 'Remove one ') + q.name);
+      b.onclick = () => { q.value = Math.max(0, (+q.value || 0) + d); q.dispatchEvent(new Event('input', { bubbles: true })); };
+      return b;
+    };
+    const wrap = document.createElement('span');
+    wrap.className = 'qty';
+    q.replaceWith(wrap);
+    wrap.append(step('−', -1), q, step('+', 1));
+  });
+  const peso = n => '₱' + n.toLocaleString('en-PH');
+  let total = 0;
+  form.addEventListener('input', () => {
+    total = [...qtys].reduce((sum, q) => sum + (Math.max(0, +q.value || 0)) * q.dataset.price, 0);
+    document.getElementById('total').textContent = peso(total);
+    document.getElementById('total-field').value = peso(total);
+  });
+  form.addEventListener('submit', e => {
+    if (total === 0) { e.preventDefault(); alert('Please add at least one product.'); }
+    else if (!document.getElementById('pay-field').value) { e.preventDefault(); alert('Please choose a payment option below the total.'); }
+  });
+
+  const scenes = document.querySelectorAll('.scene');
+  let scene = 0;
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => {
+    scenes[scene].classList.add('off');
+    scene = (scene + 1) % scenes.length;
+    scenes[scene].classList.remove('off');
+  }, 5000);
+
+  const why = document.getElementById('services');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    why.classList.add('reveal');
+    why.querySelectorAll('.service').forEach((c, i) => c.style.setProperty('--d', i));
+    new IntersectionObserver(([e], o) => {
+      if (e.isIntersecting) { why.classList.add('in'); o.disconnect(); setTimeout(runSpark, 900); }
+    }, { threshold: .15 }).observe(why);
+  }
+
+  // power grid wire: path runs card centre to card centre (dropping to the row gap between rows)
+  function runSpark() {
+    const grid = why.querySelector('.grid');
+    const cards = [...grid.querySelectorAll('.service')];
+    grid.insertAdjacentHTML('afterbegin', '<svg class="wire"><path class="base"/><path class="live"/><circle r="5"/></svg>');
+    const [base, live] = grid.querySelectorAll('.wire path');
+    const spark = grid.querySelector('.wire circle');
+    let stops, len;
+    const layout = () => {
+      const c = cards.map(el => [el.offsetLeft + el.offsetWidth / 2, el.offsetTop + el.offsetHeight / 2, el]);
+      let d = `M${c[0][0]},${c[0][1]}`, L = 0;
+      stops = [0];
+      for (let i = 1; i < c.length; i++) {
+        const [ax, ay, a] = c[i - 1], [bx, by, b] = c[i];
+        if (a.offsetTop === b.offsetTop) d += ` L${bx},${by}`;
+        else { const my = (a.offsetTop + a.offsetHeight + b.offsetTop) / 2; d += ` L${ax},${my} L${bx},${my} L${bx},${by}`; }
+        L += Math.abs(bx - ax) + Math.abs(by - ay); // all segments are straight across/down, so length = dx + dy
+        stops.push(L);
+      }
+      base.setAttribute('d', d); live.setAttribute('d', d);
+      len = L; live.style.strokeDasharray = len;
+    };
+    layout();
+    addEventListener('resize', layout);
+    const dur = cards.length * 450, pause = 1500;
+    let start, lit = 0, charged = false;
+    // ponytail: rAF loop runs forever; pause it off-screen if battery use ever matters
+    const frame = t => {
+      start ??= t;
+      const p = ((t - start) % (dur + pause)) / dur;
+      const l = Math.min(p, 1) * len;
+      const pt = base.getPointAtLength(l);
+      spark.setAttribute('cx', pt.x); spark.setAttribute('cy', pt.y);
+      spark.style.opacity = p > 1 ? 0 : 1;
+      if (p >= 1) charged = true;
+      live.style.strokeDashoffset = charged ? 0 : len - l;
+      while (lit < cards.length && stops[lit] <= l) cards[lit++].classList.add('lit');
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  }
+
+  const PAY_EMAIL = 'admin.lloyd@heandsons.com'; // TBA: confirm address
+  form.querySelectorAll('.pay-email').forEach(a => { a.href = 'mailto:' + PAY_EMAIL; a.textContent = PAY_EMAIL; });
+  form.querySelectorAll('[data-pay]').forEach(b => b.addEventListener('click', () => {
+    if (total === 0) return alert('Please add at least one product.');
+    if (!form.reportValidity()) return;
+    document.getElementById('pay-field').value = b.dataset.pay;
+    form.querySelectorAll('.amt').forEach(s => s.textContent = peso(total));
+    document.getElementById(b.dataset.dialog).showModal();
+  }));
+  form.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
+</script>
+</body>
+</html>

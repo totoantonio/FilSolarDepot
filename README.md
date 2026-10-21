@@ -6,9 +6,11 @@ Website for a solar company, hosted free on GitHub Pages.
 Plain HTML + CSS. No framework, no build step. Add JS only when a feature needs it.
 
 ## Structure
-- `index.html` — the site
-- `style.css` — styles
-- `images/` — photos and logos
+- `index.html` — the whole site (styles inside)
+- `images/` — logo and product photos (cropped from screenshots, replace with originals)
+
+## Placeholders
+Yellow-highlighted text on the site = info still needed (prices, rail specs, history, contact, payment details, Formspree ID).
 
 ## Hosting (GitHub Pages)
 1. Push this folder to the GitHub repo `websiteproject`.
