@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fil Solar Depot</title>
 <meta name="description" content="Fil Solar Depot — solar panels and mounting systems in the Philippines.">
+<meta name="designer" content="totoantonio.cloud">
+<!-- Website by totoantonio.cloud -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://totoantonio.github.io/websiteproject/">
 <meta property="og:title" content="Fil Solar Depot | Solar Panels and Installation">
@@ -30,6 +32,8 @@
     --sun: linear-gradient(90deg, var(--orange), var(--red));
   }
   * { box-sizing: border-box; }
+  /* stop Android/Facebook in-app browsers from inflating text sizes */
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   body { margin: 0; font: 17px/1.5 "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: var(--bg); }
   img { max-width: 100%; display: block; }
   button { font-family: inherit; }
@@ -56,7 +60,7 @@
   svg.badge.he, svg.badge.seal { padding: 0; background: none; border-radius: 0; }
   @media (max-width: 800px) { .story { grid-template-columns: 1fr; gap: 24px; } }
 
-  header { position: sticky; top: 0; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-bottom: 1px solid #E5E5EA; z-index: 10; }
+  header { position: sticky; top: 0; background: rgba(255,255,255,.92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid #E5E5EA; z-index: 10; }
   header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
   header img { height: 40px; width: auto; }
   nav a { margin-left: 24px; text-decoration: none; color: var(--ink); font-weight: 500; font-size: .95rem; }
@@ -172,7 +176,7 @@
   .reveal.in .service:hover { transform: translateY(-2px); transition-delay: 0s; transition-duration: .4s; border-color: transparent; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 12px 32px rgba(10,42,140,.10); }
   /* soft spotlight that follows the cursor inside the card (JS sets --x/--y) */
   .service { overflow: hidden; }
-  .service::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(240px circle at var(--x, 50%) var(--y, 50%), rgba(30,91,216,.07), transparent 70%); }
+  .service::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(240px circle at var(--x, 50%) var(--y, 50%), rgba(30,91,216,.07), transparent 70%); }
   .service:hover::after { opacity: 1; }
   .num { transition: transform .4s cubic-bezier(.16,1,.3,1); }
   .service:hover .num { transform: scale(1.06); }
@@ -225,7 +229,7 @@
   @media (max-width: 500px) { .pay { grid-template-columns: 1fr; } }
 
   dialog { border: 0; border-radius: 20px; padding: 28px; width: calc(100% - 32px); max-width: 460px; max-height: calc(100% - 32px); color: var(--ink); }
-  dialog::backdrop { background: rgba(4,19,74,.6); backdrop-filter: blur(4px); }
+  dialog::backdrop { background: rgba(4,19,74,.6); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
   dialog h3 { margin: 0 0 16px; color: var(--navy); text-align: center; }
   .qr { width: 220px; height: 220px; margin: 0 auto 16px; border: 2px dashed #D1D1D6; border-radius: 16px; display: grid; place-items: center; }
   .due { text-align: center; margin: 0 0 12px; }
@@ -306,7 +310,7 @@
   /* sticky quote bar on phones */
   .mbar { display: none; }
   @media (max-width: 700px) {
-    .mbar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.92); backdrop-filter: blur(12px); border-top: 1px solid #E5E5EA; }
+    .mbar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.92); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid #E5E5EA; }
     .mbar .btn { text-align: center; padding: 12px 8px; font-size: .9rem; }
     .mbar .ghost { color: var(--ink); border-color: #C4C7C5; }
     body { padding-bottom: 72px; }
@@ -343,9 +347,9 @@
   .box:not(.items) label { min-height: 40px; padding: 0 16px; gap: 8px; border: 1px solid var(--outline); border-radius: 8px; font-size: .9rem; color: var(--muted); cursor: pointer; user-select: none; transition: background .15s; }
   .box:not(.items) label:hover { background: rgba(68,71,70,.08); }
   .box:not(.items) input { position: absolute; opacity: 0; width: 0; height: 0; }
-  .box:not(.items) label:has(input:checked) { background: var(--tonal); border-color: transparent; color: var(--on-tonal); }
-  .box:not(.items) label:has(input:checked)::before { content: "✓"; font-weight: 700; }
-  .box:not(.items) label:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .box:not(.items) label.on { background: var(--tonal); border-color: transparent; color: var(--on-tonal); }
+  .box:not(.items) label.on::before { content: "✓"; font-weight: 700; }
+  .box:not(.items) label:focus-within { outline: 2px solid var(--blue); outline-offset: 2px; }
 
   /* dialogs: M3 extra-large radius */
   dialog { border-radius: 28px; padding: 24px; }
@@ -950,6 +954,10 @@
     calcDlg.querySelector('.consult input[name=name]').focus();
   });
   document.getElementById('to-calc').addEventListener('click', () => calcDlg.classList.remove('step2'));
+
+  // service chips: class toggle instead of CSS :has(), which older in-app browsers lack
+  form.querySelectorAll('.box:not(.items) input').forEach(c =>
+    c.addEventListener('change', () => c.parentElement.classList.toggle('on', c.checked)));
 
   const PAY_EMAIL = 'admin.lloyd@heandsons.com'; // TBA: confirm address
   form.querySelectorAll('.pay-email').forEach(a => { a.href = 'mailto:' + PAY_EMAIL; a.textContent = PAY_EMAIL; });
