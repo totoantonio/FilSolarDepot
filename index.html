@@ -53,6 +53,7 @@
   nav a { margin-left: 24px; text-decoration: none; color: var(--ink); font-weight: 500; font-size: .95rem; }
   nav a:hover { color: var(--blue); }
   nav .btn { padding: 8px 18px; color: #fff; }
+  @media (max-width: 960px) { nav a { margin-left: 16px; } nav .btn { display: none; } }
   @media (max-width: 700px) {
     header .wrap { flex-wrap: wrap; height: auto; padding-top: 10px; }
     header img { height: 32px; }
@@ -68,6 +69,10 @@
       radial-gradient(circle at 75% 35%, rgba(232,52,28,.2), transparent 45%),
       linear-gradient(135deg, #04134A, var(--navy) 45%, var(--blue));
   }
+  /* hero fills the first screen exactly (minus the sticky header) */
+  .hero { min-height: calc(100vh - 64px); min-height: calc(100svh - 64px); display: flex; align-items: center; }
+  .hero > .wrap { width: 100%; }
+  @media (max-width: 700px) { .hero { min-height: calc(100svh - 82px - 72px); } } /* minus header and bottom quote bar */
   .hero .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
   .eyebrow { display: inline-block; font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
   .hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.75rem); margin: 0 0 16px; line-height: 1.05; letter-spacing: -.02em; }
@@ -152,21 +157,17 @@
   .num { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--blue), var(--navy)); color: #fff; display: grid; place-items: center; font-weight: 700; margin-bottom: 14px; }
 
   /* Why Us cards: fade up one by one when scrolled into view (JS adds .reveal/.in), lift on hover */
-  .reveal .service { opacity: 0; transform: translateY(24px); transition: opacity .5s ease-out, transform .5s ease-out, box-shadow .2s, border-color .3s; transition-delay: calc(var(--d) * 70ms); }
+  /* Apple/Google-style: slow ease-out-expo rise with a slight scale, short stagger, quiet hover */
+  .reveal .service { opacity: 0; transform: translateY(32px) scale(.98); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1), box-shadow .4s, border-color .4s; transition-delay: calc(var(--d) * 60ms); }
   .reveal.in .service { opacity: 1; transform: none; }
-  .reveal.in .service:hover { transform: translateY(-4px); transition-delay: 0s; box-shadow: 0 16px 40px rgba(247,162,27,.28); }
-  .reveal.in .service:hover .num { transform: rotate(-8deg) scale(1.1); box-shadow: 0 0 18px rgba(247,162,27,.8); }
-  .num { transition: transform .2s, box-shadow .2s; }
+  .reveal.in .service:hover { transform: translateY(-2px); transition-delay: 0s; transition-duration: .4s; border-color: transparent; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 12px 32px rgba(10,42,140,.10); }
+  /* soft spotlight that follows the cursor inside the card (JS sets --x/--y) */
+  .service { overflow: hidden; }
+  .service::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(240px circle at var(--x, 50%) var(--y, 50%), rgba(30,91,216,.07), transparent 70%); }
+  .service:hover::after { opacity: 1; }
+  .num { transition: transform .4s cubic-bezier(.16,1,.3,1); }
+  .service:hover .num { transform: scale(1.06); }
 
-  /* power grid: dashed wire links the cards in order; a spark runs along it and lights each card it reaches (JS) */
-  #services .grid { position: relative; }
-  .wire { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-  .wire path { fill: none; stroke-width: 2; stroke-linejoin: round; }
-  .wire .base { stroke: #D1D1D6; stroke-dasharray: 4 5; }
-  .wire .live { stroke: var(--orange); }
-  .wire circle { fill: #FFD66B; filter: drop-shadow(0 0 4px #F7A21B) drop-shadow(0 0 10px #E8341C); }
-  .service.lit { border-color: var(--orange); }
-  .service.lit .num { background: var(--sun); box-shadow: 0 0 16px rgba(247,162,27,.6); }
 
   #why-panels { background: linear-gradient(135deg, #04134A, var(--navy)); color: #fff; }
   #why-panels h2 { color: #fff; }
@@ -238,14 +239,78 @@
   .copy { border-top: 1px solid #3A3A3C; margin: 32px 0 0; padding-top: 20px; font-size: .8rem; color: #8E8E93; }
   @media (max-width: 700px) { .foot { grid-template-columns: 1fr; gap: 28px; } }
 
+  /* savings calculator */
+  .calc-dlg { max-width: 760px; padding: 32px; }
+  .calc-dlg h2 { text-align: center; margin-top: 8px; padding: 0 44px; }
+  .calc-dlg .lead { text-align: center; margin-bottom: 24px; }
+  .calc-dlg .calc { padding: 0; box-shadow: none; max-width: none; }
+  /* step 2: consultation form replaces the calculator inside the same pop-up */
+  form.consult { display: none; grid-template-columns: 1fr; gap: 16px; }
+  form.consult h2 { margin: 4px 0 0; }
+  form.consult .lead { margin: 0 0 8px; }
+  .calc-dlg.step2 form.consult { display: grid; }
+  .calc-dlg.step2 > h2, .calc-dlg.step2 > .lead, .calc-dlg.step2 > .calc { display: none; }
+  .link { justify-self: start; border: 0; background: none; padding: 0; color: var(--blue); font-weight: 500; font-size: .95rem; cursor: pointer; }
+  select { font: inherit; width: 100%; height: 56px; padding: 0 16px; border: 1px solid var(--outline, #C4C7C5); border-radius: 12px; background: #fff; color: var(--ink); }
+  select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+  .x { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--soft); font-size: 1.5rem; line-height: 1; cursor: pointer; color: var(--ink); }
+  .x:hover { background: #E5E5EA; }
+  @media (max-width: 700px) { .calc-dlg { padding: 24px 20px; } }
+  .calc { max-width: 760px; margin: 0 auto; background: #fff; border-radius: 28px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .bill { display: grid; gap: 8px; font-size: .9rem; color: #444746; }
+  .bill output { font-size: 2.5rem; font-weight: 600; color: var(--navy); line-height: 1.1; }
+  .bill input { height: auto; padding: 0; border: 0; accent-color: var(--orange); }
+  .results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0 16px; }
+  .results div { background: var(--soft); border-radius: 16px; padding: 16px; }
+  .results span { display: block; font-size: .8rem; color: #444746; }
+  .results strong { font-size: 1.35rem; color: var(--ink); }
+  .fine { font-size: .8rem; color: var(--gray); margin: 0; }
+  .calc .cta { margin-top: 24px; }
+  @media (max-width: 700px) { .results { grid-template-columns: 1fr 1fr; } .calc { padding: 24px 20px; } }
+
+  /* testimonials */
+  #reviews { background: var(--soft); }
+  #reviews .grid { grid-template-columns: repeat(3, 1fr); }
+  /* below 900px: swipeable row with snap, next card peeking */
+  @media (max-width: 900px) {
+    #reviews .grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; margin: 0 -16px; padding: 4px 16px 12px; scrollbar-width: none; }
+    #reviews .grid::-webkit-scrollbar { display: none; }
+    .review { flex: 0 0 min(85%, 380px); scroll-snap-align: center; }
+  }
+  .review { margin: 0; background: #fff; border-radius: 24px; padding: 28px; position: relative; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .review .sample { position: absolute; top: 20px; right: 20px; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+  .stars { color: var(--orange); letter-spacing: 2px; font-size: 1.1rem; }
+  .review blockquote { margin: 0; font-size: 1.05rem; line-height: 1.55; flex: 1; }
+  .review figcaption { border-top: 1px solid #E5E5EA; padding-top: 14px; }
+  .review figcaption strong { display: block; }
+  .review figcaption span { display: block; font-size: .85rem; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* FAQ */
+  .faq { max-width: 760px; margin: 0 auto; border-top: 1px solid #E5E5EA; }
+  .faq details { border-bottom: 1px solid #E5E5EA; }
+  .faq summary { cursor: pointer; list-style: none; padding: 20px 40px 20px 0; font-weight: 500; font-size: 1.05rem; position: relative; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; color: var(--blue); transition: transform .3s; }
+  .faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  .faq p { margin: 0 0 20px; color: #444746; max-width: 640px; }
+
+  /* sticky quote bar on phones */
+  .mbar { display: none; }
+  @media (max-width: 700px) {
+    .mbar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.92); backdrop-filter: blur(12px); border-top: 1px solid #E5E5EA; }
+    .mbar .btn { text-align: center; padding: 12px 8px; font-size: .9rem; }
+    .mbar .ghost { color: var(--ink); border-color: #C4C7C5; }
+    body { padding-bottom: 72px; }
+  }
+
   /* ===== Google / Material 3 polish for the order form ===== */
   :root { --surface: #F0F4F9; --outline: #C4C7C5; --muted: #444746; --tonal: #D3E3FD; --on-tonal: #041E49; }
   form .col { gap: 20px; }
   label, .group legend { font-size: .9rem; color: var(--muted); }
-  input:not([type=checkbox]), textarea { height: 56px; padding: 0 16px; border: 1px solid var(--outline); border-radius: 12px; background: #fff; color: var(--ink); transition: border-color .15s, box-shadow .15s; }
+  input:not([type=checkbox]):not([type=range]), textarea { height: 56px; padding: 0 16px; border: 1px solid var(--outline); border-radius: 12px; background: #fff; color: var(--ink); transition: border-color .15s, box-shadow .15s; }
   textarea { height: auto; padding: 16px; resize: vertical; }
-  input:not([type=checkbox]):hover, textarea:hover { border-color: #747775; }
-  input:not([type=checkbox]):focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+  input:not([type=checkbox]):not([type=range]):hover, textarea:hover { border-color: #747775; }
+  input:not([type=checkbox]):not([type=range]):focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
 
   /* cart: tonal surface card, steppers, clean total */
   .items { background: var(--surface); border: 0; border-radius: 24px; padding: 8px 24px 24px; }
@@ -285,6 +350,7 @@
   <div class="wrap">
     <a href="#"><img src="images/logo.png" alt="Fil Solar Depot"></a>
     <nav>
+      <a href="#savings" data-open>Savings</a>
       <a href="#services">Why Us</a>
       <a href="#products">Products</a>
       <a href="#about">About</a>
@@ -303,7 +369,7 @@
       <p>High-efficiency bifacial panels from Canadian Solar, Jinko, and Hestia. Free consultation, site survey, and installation.</p>
       <div class="actions">
         <a class="btn" href="#order">Order Now</a>
-        <a class="btn ghost" href="#products">View Products</a>
+        <a class="btn ghost" href="#savings" data-open>Calculate Savings</a>
       </div>
     </div>
     <figure class="house">
@@ -378,6 +444,7 @@
           <rect x="110" y="110" width="180" height="180" fill="#E5E5EA"/>
           <rect x="122" y="150" width="156" height="96" fill="url(#win)"/>
           <rect x="150" y="122" width="100" height="16" rx="3" fill="#0A2A8C"/>
+          <text x="200" y="133.5" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="1" fill="#fff">HE &amp; SONS</text>
           <rect x="178" y="252" width="44" height="36" rx="2" fill="#1E5BD8"/>
           <path d="M200 252V288" stroke="#fff" stroke-width="1.5"/>
           <rect x="104" y="104" width="192" height="8" rx="2" fill="#3A3A3C"/>
@@ -420,6 +487,53 @@
     <div><strong>N-type</strong><span>TOPCon cells</span></div>
   </div>
 </div>
+
+<dialog id="savings" class="calc-dlg" aria-label="Savings calculator">
+    <button class="x" type="button" data-close aria-label="Close">&times;</button>
+    <h2>How Much Can You Save?</h2>
+    <p class="lead">Slide to your average monthly electric bill and see an estimate in seconds.</p>
+    <div class="calc">
+      <label class="bill">Monthly electric bill
+        <output id="bill-out">₱5,000</output>
+        <input id="bill" type="range" min="1000" max="50000" step="500" value="5000" aria-label="Monthly electric bill in pesos">
+      </label>
+      <div class="results">
+        <div><span>Recommended system</span><strong id="r-kw"></strong></div>
+        <div><span>Panels needed</span><strong id="r-panels"></strong></div>
+        <div><span>Est. monthly savings</span><strong id="r-save"></strong></div>
+        <div><span>Est. payback</span><strong id="r-payback"></strong></div>
+      </div>
+      <p class="fine">Estimates assume ₱12/kWh, 4.5 peak sun hours, and 625W panels. Your free site survey gives the exact figures.</p>
+      <div class="cta"><button class="btn" type="button" id="to-consult">Book a Free Consultation</button></div>
+    </div>
+    <!-- TBA: same Formspree ID as the order form -->
+    <form class="consult" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="hidden" name="_subject" value="Free consultation request">
+      <input type="hidden" name="Monthly bill" id="c-bill">
+      <input type="hidden" name="Estimated system" id="c-est">
+      <button class="link" type="button" id="to-calc">&larr; Back to Calculator</button>
+      <h2>Book a Free Consultation</h2>
+      <p class="lead">Leave your details and our solar specialist will call you.</p>
+      <label>Full Name <input name="name" required autocomplete="name"></label>
+      <label>Address <input name="address" required autocomplete="street-address"></label>
+      <div class="row">
+        <label>Mobile Number <input name="phone" type="tel" required autocomplete="tel"></label>
+        <label>Email <input name="email" type="email" required autocomplete="email"></label>
+      </div>
+      <div class="row">
+        <label>Best Time to Call
+          <select name="Best time to call" required>
+            <option value="">Choose a time</option>
+            <option>Morning (8 AM – 12 PM)</option>
+            <option>Afternoon (12 – 5 PM)</option>
+            <option>Evening (5 – 8 PM)</option>
+          </select>
+        </label>
+        <label>Target Installation Date <input name="Target installation date" type="date" id="c-date"></label>
+      </div>
+      <button class="btn" type="submit">Request Free Consultation</button>
+    </form>
+</dialog>
 
 <section id="services">
   <div class="wrap">
@@ -549,7 +663,7 @@
         <p>Electricity keeps getting more expensive, and every rate hike and brownout lands on the same people: the family checking the bill at the end of the month, the store owner running a generator just to keep the freezer cold. <strong>Fil Solar Depot</strong> exists to give them a way out: clean power from their own roof, at a price the sun will never raise.</p>
         <p>We carry only high-efficiency bifacial N-type panels from brands with a global track record. We survey your site before we quote, size the system to your actual consumption, and install it with our own crew.</p>
         <h3>Backed by 50 Years in the Energy Business</h3>
-        <p>Fil Solar Depot is backed by HE &amp; SONS, a company that has served Filipino customers for 50 years as a Chevron distributor and the company behind the Blu Energy gasoline station chain. Half a century of keeping vehicles, farms, and businesses running has built a reputation for reliability, and Fil Solar Depot carries that same standard to every rooftop.</p>
+        <p>Fil Solar Depot is backed by HE &amp; SONS, a company that has served Filipino customers for 50 years as a distributor of Chevron lubricants, and through Blu Energy, its chain of gasoline stations. Half a century of keeping vehicles, farms, and businesses running has built a reputation for reliability, and Fil Solar Depot carries that same standard to every rooftop.</p>
         <h3>A Trained, Accredited Team</h3>
         <p>Our installers are experienced professionals trained and accredited by TESDA in solar installation. Every system is mounted, wired, and tested to standard by people who know exactly what they're doing.</p>
         <h3>Our Name Is on It</h3>
@@ -560,8 +674,8 @@
         <div class="fact"><img src="images/tesda.svg" alt="TESDA seal" width="48" height="48"><div><strong>TESDA</strong><span>trained and accredited solar installers</span></div></div>
         <div class="fact"><svg class="badge seal" viewBox="0 0 48 48" role="img" aria-label="Warranty seal"><defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7A21B"/><stop offset="1" stop-color="#E8341C"/></linearGradient><path id="arc" d="M11 24a13 13 0 0 1 26 0"/></defs><polygon fill="url(#gold)" points="24.0,1.0 26.7,3.7 30.0,1.8 31.8,5.1 35.5,4.1 36.5,7.7 40.3,7.7 40.3,11.5 43.9,12.5 42.9,16.2 46.2,18.0 44.3,21.3 47.0,24.0 44.3,26.7 46.2,30.0 42.9,31.8 43.9,35.5 40.3,36.5 40.3,40.3 36.5,40.3 35.5,43.9 31.8,42.9 30.0,46.2 26.7,44.3 24.0,47.0 21.3,44.3 18.0,46.2 16.2,42.9 12.5,43.9 11.5,40.3 7.7,40.3 7.7,36.5 4.1,35.5 5.1,31.8 1.8,30.0 3.7,26.7 1.0,24.0 3.7,21.3 1.8,18.0 5.1,16.2 4.1,12.5 7.7,11.5 7.7,7.7 11.5,7.7 12.5,4.1 16.2,5.1 18.0,1.8 21.3,3.7"/><circle cx="24" cy="24" r="17" fill="#0A2A8C"/><circle cx="24" cy="24" r="15.5" fill="none" stroke="#F7A21B" stroke-width=".6"/><text font-size="4.6" font-weight="700" letter-spacing=".5" fill="#fff"><textPath href="#arc" startOffset="50%" text-anchor="middle">WARRANTY</textPath></text><path d="M18.5 28l3.5 3.5 7.5-8" fill="none" stroke="#F7A21B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Warranty</strong><span>on our workmanship, plus up to 30 years from the manufacturer <span class="ph">workmanship term TBA</span></span></div></div>
         <ul>
-          <li><b>Chevron Distributor.</b> Part of a trusted energy group.</li>
-          <li><b>Blu Energy Stations.</b> A name customers already know.</li>
+          <li><b>Chevron Lubricants Distributor.</b> Trusted by vehicle owners and businesses for decades.</li>
+          <li><b>Blu Energy Gasoline Stations.</b> A name customers already know.</li>
           <li><b>Our Own Crew.</b> Surveyed first, quoted once, installed right.</li>
         </ul>
       </aside>
@@ -661,6 +775,50 @@
   </div>
 </section>
 
+<section id="reviews">
+  <div class="wrap">
+    <h2>What Our Customers Say</h2>
+    <p class="lead">Homes and businesses across Cagayan de Oro, powered by the sun.</p>
+    <!-- SAMPLE reviews for layout only. Replace with real customer reviews (with their permission) before publishing. -->
+    <div class="grid">
+      <figure class="review">
+        <span class="ph sample">Sample</span>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>Our electric bill went from almost ₱8,000 down to around ₱2,500. The team surveyed our roof, explained everything clearly, and finished the installation in no time.</blockquote>
+        <figcaption><strong>Maria Santos</strong><span>Carmen, Cagayan de Oro</span><span>5.0 kWp home system</span></figcaption>
+      </figure>
+      <figure class="review">
+        <span class="ph sample">Sample</span>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>Brownouts used to stop our store completely. With the battery backup, our freezers and lights keep running. Best investment we've made for the business.</blockquote>
+        <figcaption><strong>Ramon Dela Cruz</strong><span>Lapasan, Cagayan de Oro</span><span>10 kWp + battery</span></figcaption>
+      </figure>
+      <figure class="review">
+        <span class="ph sample">Sample</span>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>I trusted them because of HE &amp; SONS. They handled the net metering paperwork for us and came back right away when we had a question. Very professional crew.</blockquote>
+        <figcaption><strong>Liza Fernandez</strong><span>Kauswagan, Cagayan de Oro</span><span>6.3 kWp home system</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>Frequently Asked Questions</h2>
+    <p class="lead">Straight answers before you go solar.</p>
+    <div class="faq">
+      <details><summary>How much can I save with solar?</summary><p>It depends on your bill, roof, and when you use power. Most homes size a system to cover most of their daytime use. Try the savings calculator above, then book a free site survey for exact numbers.</p></details>
+      <details><summary>Will my solar work during a brownout?</summary><p>A standard grid-tied system switches off during an outage for safety. To keep the lights on during brownouts, add a battery and hybrid inverter so your stored solar power takes over automatically.</p></details>
+      <details><summary>What is net metering?</summary><p>Under the Philippine Net-Metering Program, extra power your panels send to the grid is credited on your electric bill. We help you prepare and file the application with your local utility.</p></details>
+      <details><summary>How long does installation take?</summary><p>After your site survey and approval, a typical home installation takes <span class="ph">[X] days</span>. Commercial projects are scheduled after design.</p></details>
+      <details><summary>What warranties do I get?</summary><p>Panels carry manufacturer warranties of up to 15 years on the product and 30 years on power output. On top of that, our own workmanship warranty covers the installation <span class="ph">[term TBA]</span>.</p></details>
+      <details><summary>Do you install for businesses?</summary><p>Yes. We design and install systems for homes, stores, offices, and other commercial buildings.</p></details>
+      <details><summary>How do I pay?</summary><p>Choose your products in the order form, then pay via GCash / QR Ph or bank transfer and email us your proof of payment.</p></details>
+    </div>
+  </div>
+</section>
+
 <footer id="contact">
   <div class="wrap">
     <div class="foot">
@@ -687,6 +845,11 @@
     <p class="copy">© 2026 Fil Solar Depot. All rights reserved.</p>
   </div>
 </footer>
+
+<div class="mbar">
+  <a class="btn ghost" href="#savings" data-open>Calculate Savings</a>
+  <a class="btn" href="#order">Get a Free Quote</a>
+</div>
 
 <script>
   const form = document.querySelector('#order form');
@@ -733,51 +896,51 @@
     why.classList.add('reveal');
     why.querySelectorAll('.service').forEach((c, i) => c.style.setProperty('--d', i));
     new IntersectionObserver(([e], o) => {
-      if (e.isIntersecting) { why.classList.add('in'); o.disconnect(); setTimeout(runSpark, 900); }
+      if (e.isIntersecting) { why.classList.add('in'); o.disconnect(); }
     }, { threshold: .15 }).observe(why);
   }
 
-  // power grid wire: path runs card centre to card centre (dropping to the row gap between rows)
-  function runSpark() {
-    const grid = why.querySelector('.grid');
-    const cards = [...grid.querySelectorAll('.service')];
-    grid.insertAdjacentHTML('afterbegin', '<svg class="wire"><path class="base"/><path class="live"/><circle r="5"/></svg>');
-    const [base, live] = grid.querySelectorAll('.wire path');
-    const spark = grid.querySelector('.wire circle');
-    let stops, len;
-    const layout = () => {
-      const c = cards.map(el => [el.offsetLeft + el.offsetWidth / 2, el.offsetTop + el.offsetHeight / 2, el]);
-      let d = `M${c[0][0]},${c[0][1]}`, L = 0;
-      stops = [0];
-      for (let i = 1; i < c.length; i++) {
-        const [ax, ay, a] = c[i - 1], [bx, by, b] = c[i];
-        if (a.offsetTop === b.offsetTop) d += ` L${bx},${by}`;
-        else { const my = (a.offsetTop + a.offsetHeight + b.offsetTop) / 2; d += ` L${ax},${my} L${bx},${my} L${bx},${by}`; }
-        L += Math.abs(bx - ax) + Math.abs(by - ay); // all segments are straight across/down, so length = dx + dy
-        stops.push(L);
-      }
-      base.setAttribute('d', d); live.setAttribute('d', d);
-      len = L; live.style.strokeDasharray = len;
-    };
-    layout();
-    addEventListener('resize', layout);
-    const dur = cards.length * 450, pause = 1500;
-    let start, lit = 0, charged = false;
-    // ponytail: rAF loop runs forever; pause it off-screen if battery use ever matters
-    const frame = t => {
-      start ??= t;
-      const p = ((t - start) % (dur + pause)) / dur;
-      const l = Math.min(p, 1) * len;
-      const pt = base.getPointAtLength(l);
-      spark.setAttribute('cx', pt.x); spark.setAttribute('cy', pt.y);
-      spark.style.opacity = p > 1 ? 0 : 1;
-      if (p >= 1) charged = true;
-      live.style.strokeDashoffset = charged ? 0 : len - l;
-      while (lit < cards.length && stops[lit] <= l) cards[lit++].classList.add('lit');
-      requestAnimationFrame(frame);
-    };
-    requestAnimationFrame(frame);
+
+  why.querySelectorAll('.service').forEach(c => c.addEventListener('pointermove', e => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--x', e.clientX - r.left + 'px');
+    c.style.setProperty('--y', e.clientY - r.top + 'px');
+  }));
+
+  // savings estimate. TBA: confirm local ₱/kWh and installed cost per kWp with the company
+  const RATE = 12, SUN = 4.5, LOSS = 0.8, PANEL_W = 625, COST_PER_KW = 50000;
+  function estimate(bill) {
+    const kwhPerKw = SUN * 30 * LOSS;                 // monthly kWh one kWp produces
+    const panels = Math.max(1, Math.ceil(bill / RATE / kwhPerKw * 1000 / PANEL_W));
+    const kw = panels * PANEL_W / 1000;
+    const save = Math.min(bill, kw * kwhPerKw * RATE);
+    return { kw, panels, save, payback: kw * COST_PER_KW / (save * 12) };
   }
+  const billIn = document.getElementById('bill');
+  const showEstimate = () => {
+    const b = +billIn.value, e = estimate(b);
+    document.getElementById('bill-out').textContent = peso(b);
+    document.getElementById('r-kw').textContent = e.kw.toFixed(1) + ' kWp';
+    document.getElementById('r-panels').textContent = e.panels;
+    document.getElementById('r-save').textContent = peso(Math.round(e.save));
+    document.getElementById('r-payback').textContent = e.payback.toFixed(1) + ' years';
+  };
+  billIn.addEventListener('input', showEstimate);
+  showEstimate();
+  const calcDlg = document.getElementById('savings');
+  document.querySelectorAll('[data-open]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); calcDlg.showModal(); }));
+  calcDlg.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => calcDlg.close()));
+  calcDlg.addEventListener('click', e => { if (e.target === calcDlg) calcDlg.close(); }); // tap backdrop to close
+  calcDlg.addEventListener('close', () => calcDlg.classList.remove('step2'));
+  document.getElementById('c-date').min = new Date().toISOString().slice(0, 10);
+  document.getElementById('to-consult').addEventListener('click', () => {
+    const e = estimate(+billIn.value);
+    document.getElementById('c-bill').value = peso(+billIn.value);
+    document.getElementById('c-est').value = `${e.kw.toFixed(1)} kWp, ${e.panels} panels`;
+    calcDlg.classList.add('step2');
+    calcDlg.querySelector('.consult input[name=name]').focus();
+  });
+  document.getElementById('to-calc').addEventListener('click', () => calcDlg.classList.remove('step2'));
 
   const PAY_EMAIL = 'admin.lloyd@heandsons.com'; // TBA: confirm address
   form.querySelectorAll('.pay-email').forEach(a => { a.href = 'mailto:' + PAY_EMAIL; a.textContent = PAY_EMAIL; });
