@@ -47,3 +47,9 @@ One `index.html` (styles + script inside) and `images/`. No framework, no build 
 - Testimonials are SAMPLES — replace with real reviews (with permission)
 - Confirm services offered (net metering help, delivery, warranty support, maintenance)
 - Small square favicon
+
+## SEO / AI visibility
+- `llms.txt` (summary for ChatGPT, Claude, Perplexity), `robots.txt` (all search and AI bots allowed), `sitemap.xml`
+- Structured data (JSON-LD) in `<head>`: business profile + FAQ; geo tags for Cagayan de Oro
+- On github.io, robots.txt and llms.txt only count at the domain root, so they take full effect after moving to a custom domain. Until then, submit `sitemap.xml` in Google Search Console and Bing Webmaster Tools
+- Keep llms.txt and JSON-LD in sync when contact details, products or FAQ change

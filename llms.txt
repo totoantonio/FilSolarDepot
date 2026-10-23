@@ -1,0 +1,29 @@
+# Fil Solar Depot
+
+> Supplier of high-efficiency bifacial solar panels and mounting systems in the Philippines, backed by HE & SONS, a 50-year-old Chevron Lubricants distributor. Free consultation, site survey, and system design. Order online and pay by GCash, QR Ph, or bank transfer.
+
+## Products
+- Canadian Solar 625W Bifacial panel
+- Jinko Solar 590W Bifacial panel
+- Hestia 650W Bifacial Double Glass panel
+- Aluminum mounting rail
+- Batteries and inverters (models to be announced)
+
+## Services
+- Free consultation, free site survey, free system design and quote
+- Net metering assistance, delivery, warranty claim support, maintenance and cleaning
+- Installation through partner: SOLAR HE and Sons (https://totoantonio.github.io/solarpowerinstall/)
+
+## Key facts
+- Team: TESDA-trained solar panel specialists in technical support, warehouse, and sales
+- Backing: HE & SONS, 50 years in business as a Chevron Lubricants distributor
+- Warranty: manufacturer warranties up to 15 years product and 30 years power output; Fil Solar Depot files and follows up claims
+- Payment: GCash, QR Ph, bank transfer; online order form with printable order summary
+- Email: info@filsolardepot.com
+
+## Pages
+- [Home](https://totoantonio.github.io/websiteproject/)
+- [Savings calculator](https://totoantonio.github.io/websiteproject/#savings)
+- [Products](https://totoantonio.github.io/websiteproject/#products)
+- [Order form](https://totoantonio.github.io/websiteproject/#order)
+- [FAQ](https://totoantonio.github.io/websiteproject/#faq)
