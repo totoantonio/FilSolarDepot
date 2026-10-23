@@ -1,6 +1,6 @@
 # Fil Solar Depot Website
 
-Website for Fil Solar Depot, backed by HE & SONS (Chevron Lubricants distributor, Blu Energy gasoline stations).
+Website for Fil Solar Depot, backed by HE & SONS (Chevron Lubricants distributor).
 
 - **Live:** https://totoantonio.github.io/websiteproject/
 - **Repo:** https://github.com/totoantonio/websiteproject
