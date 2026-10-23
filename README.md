@@ -28,7 +28,7 @@ One `index.html` (styles + script inside) and `images/`. No framework, no build 
 4. Why Fil Solar Depot? (8 service cards, Apple-style reveal)
 5. Why Our Panels
 6. Products (specs expand per card)
-7. Our Story (50 years in business, TESDA, warranty seal)
+7. Our Story (50 years in business, TESDA-trained team, warranty seal)
 8. Order Form → Place Order → Order Summary pop-up (order no., Save as PDF / Print) → GCash/QR Ph or Bank Transfer
 9. Testimonials (SAMPLE, swipe row on phones)
 10. FAQ
@@ -42,7 +42,7 @@ One `index.html` (styles + script inside) and `images/`. No framework, no build 
 - Bank details and GCash/QR Ph code
 - Payment-proof email `PAY_EMAIL` (given as admin.lloyd@he@sons.com, which is invalid; using admin.lloyd@heandsons.com)
 - Formspree ID `YOUR_FORM_ID` (order + consultation forms) — until set, orders show "couldn't send, email the PDF"
-- Workmanship warranty term, installation days (FAQ)
+- Installation partner website link (service card 4 + FAQ, `href="#"`)
 - Calculator assumptions: ₱12/kWh, ₱50,000/kWp installed
 - Testimonials are SAMPLES — replace with real reviews (with permission)
 - Confirm services offered (net metering help, delivery, warranty support, maintenance)
