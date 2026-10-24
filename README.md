@@ -2,8 +2,8 @@
 
 Website for Fil Solar Depot, backed by HE & SONS (Chevron Lubricants distributor).
 
-- **Live:** https://totoantonio.github.io/websiteproject/
-- **Repo:** https://github.com/totoantonio/websiteproject
+- **Live:** https://totoantonio.github.io/FilSolarDepot/
+- **Repo:** https://github.com/totoantonio/FilSolarDepot
 - **Credit:** totoantonio.cloud (hidden in page meta)
 
 ## Stack

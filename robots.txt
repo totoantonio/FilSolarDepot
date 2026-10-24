@@ -21,4 +21,4 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://totoantonio.github.io/websiteproject/sitemap.xml
+Sitemap: https://totoantonio.github.io/FilSolarDepot/sitemap.xml
