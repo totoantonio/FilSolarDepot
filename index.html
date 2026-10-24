@@ -1042,6 +1042,11 @@
   document.querySelectorAll('#products .card details').forEach(d =>
     d.addEventListener('toggle', () => d.open ? specIO.observe(d.closest('.card')) : specIO.unobserve(d.closest('.card'))));
 
+  // ...and when the user clicks or taps outside the card
+  document.addEventListener('click', e => document.querySelectorAll('#products .card details[open]').forEach(d => {
+    if (!d.closest('.card').contains(e.target)) d.open = false;
+  }));
+
   // phone menu
   const menuBtn = document.querySelector('.menu'), nav = document.getElementById('site-nav');
   const setMenu = open => { nav.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); };
