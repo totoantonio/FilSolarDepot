@@ -1035,6 +1035,13 @@
     });
   }
 
+  // close a product's specs once its card scrolls out of view
+  const specIO = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) e.target.querySelector('details').open = false;
+  }));
+  document.querySelectorAll('#products .card details').forEach(d =>
+    d.addEventListener('toggle', () => d.open ? specIO.observe(d.closest('.card')) : specIO.unobserve(d.closest('.card'))));
+
   // phone menu
   const menuBtn = document.querySelector('.menu'), nav = document.getElementById('site-nav');
   const setMenu = open => { nav.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); };
