@@ -23,7 +23,6 @@
 
 ## Pages
 - [Home](https://totoantonio.github.io/FilSolarDepot/)
-- [Savings calculator](https://totoantonio.github.io/FilSolarDepot/#savings)
 - [Products](https://totoantonio.github.io/FilSolarDepot/#products)
 - [Order form](https://totoantonio.github.io/FilSolarDepot/#order)
 - [FAQ](https://totoantonio.github.io/FilSolarDepot/#faq)

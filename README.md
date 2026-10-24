@@ -1,5 +1,7 @@
 # Fil Solar Depot Website
 
+**DRAFT** (yellow banner at top of page; remove `.draft` div before launch).
+
 Website for Fil Solar Depot, backed by HE & SONS (Chevron Lubricants distributor).
 
 - **Live:** https://totoantonio.github.io/FilSolarDepot/
@@ -7,7 +9,7 @@ Website for Fil Solar Depot, backed by HE & SONS (Chevron Lubricants distributor
 - **Credit:** totoantonio.cloud (hidden in page meta)
 
 ## Stack
-One `index.html` (styles + script inside) and `images/`. No framework, no build step. Font: Google Sans.
+One `index.html` (styles + script inside) and `images/`. No framework, no build step. Font: Plus Jakarta Sans (Google Fonts).
 
 ## Files
 - `index.html` — the whole site
@@ -22,17 +24,20 @@ One `index.html` (styles + script inside) and `images/`. No framework, no build 
 - Facebook link preview cached? Use developers.facebook.com/tools/debug → Scrape Again.
 
 ## Page sections
-1. Hero: animated house ↔ HE & SONS building, panels drop in, sun arcs, crew working; fills the first screen
-2. Figures strip
-3. Savings calculator (pop-up) → Book a Free Consultation form
-4. Why Fil Solar Depot? (8 service cards, Apple-style reveal)
-5. Why Our Panels
-6. Products (specs expand per card)
-7. Our Story (50 years in business, TESDA-trained team, warranty seal)
-8. Order Form → Place Order → Order Summary pop-up (order no., Save as PDF / Print) → GCash/QR Ph or Bank Transfer
-9. Testimonials (SAMPLE, swipe row on phones)
-10. FAQ
-11. Footer (contact, quick links); phone bottom bar (Calculate Savings / Get a Free Quote)
+Product-focused layout (since 2026-10-24). Old layout saved as git tag `v1-before-product-site` (restore: `git checkout v1-before-product-site -- index.html`).
+
+0. Yellow DRAFT banner (remove before launch)
+1. Hero: animated house ↔ HE & SONS building; Order Now / View Products
+2. Figures strip (navy gradient)
+3. Explore Our Solar Panels: 4 perks + 4 large tinted product cards (spec line, price, Order Now, Specifications panel)
+4. Why Fil Solar Depot? (8 tinted cards, one-line titles)
+5. Our Story (facts card stays in view while the story scrolls)
+6. Place Your Order → Order Summary pop-up (order no., Save as PDF / Print) → GCash/QR Ph or Bank Transfer
+7. Testimonials (SAMPLE, swipe row on phones)
+8. FAQ (rounded question boxes)
+9. Footer (navy gradient); phone bottom bar (View Products / Order Now)
+
+Style: Google Home–inspired. Logo colors only: orange→red gradient (`--sun`) for highlights and main buttons, navy/blue for text and outlines, light tints `--tint-sun` / `--tint-blue` for cards. Every section heading = small orange label + large navy title with one gradient word. Content fades up on scroll; soft glows drift behind Products and Why Us. Savings calculator removed.
 
 ## Still placeholder (yellow highlight or noted in code)
 - Product prices (`data-price` + ₱ text in the order form; "Price TBA" on cards)
