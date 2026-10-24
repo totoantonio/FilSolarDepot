@@ -219,8 +219,9 @@
   .card details > summary { position: relative; z-index: 2; }
   .card details[open] > summary { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; }
   .card details[open] > summary::before { content: "✕"; }
+  /* keep the open button navy with white text, even with a sticky tap-hover on phones */
+  .card details[open] > summary.pill, .card details[open] > summary.pill:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
   .card details ul { position: absolute; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; margin: 0; padding: 48px 40px 100px; list-style: none; background: rgba(255,255,255,.96); text-align: left; font-size: .9rem; line-height: 1.8; color: #444746; overflow: auto; animation: fade .35s ease both; }
-  .card details ul li { border-bottom: 1px solid #E8EAED; }
   @keyframes fade { from { opacity: 0; } }
   .badge-top { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); background: var(--sun); color: #fff; font-size: .72rem; font-weight: 600; letter-spacing: .04em; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
   .card.badged { padding-top: 60px; }
