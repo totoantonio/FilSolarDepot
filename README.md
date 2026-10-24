@@ -1,6 +1,6 @@
 # Fil Solar Depot Website
 
-**DRAFT** (yellow banner at top of page; remove `.draft` div before launch).
+**DRAFT** (yellow banner fixed at the top inside the header; remove the `.draft` div before launch).
 
 Website for Fil Solar Depot, backed by HE & SONS (Chevron Lubricants distributor).
 
@@ -13,7 +13,7 @@ One `index.html` (styles + script inside) and `images/`. No framework, no build 
 
 ## Files
 - `index.html` — the whole site
-- `images/logo.png` — Fil Solar Depot logo
+- `images/logo.png` — Fil Solar Depot logo, transparent background (white removed 2026-10-24)
 - `images/og.png` — 1200×630 share preview image
 - `images/tesda.svg` — TESDA seal (Wikimedia Commons)
 - `images/*-625.png`, `jinko-590.png`, `hestia-650.png`, `rail.png` — product photos cropped from screenshots (replace with originals)
@@ -26,7 +26,7 @@ One `index.html` (styles + script inside) and `images/`. No framework, no build 
 ## Page sections
 Product-focused layout (since 2026-10-24). Old layout saved as git tag `v1-before-product-site` (restore: `git checkout v1-before-product-site -- index.html`).
 
-0. Yellow DRAFT banner (remove before launch)
+0. Yellow DRAFT banner, stays fixed with the menu while scrolling (remove before launch)
 1. Hero: animated house ↔ HE & SONS building; Order Now / View Products
 2. Figures strip (navy gradient)
 3. Explore Our Solar Panels: 4 perks + 4 large tinted product cards (spec line, price, Order Now, Specifications panel)
