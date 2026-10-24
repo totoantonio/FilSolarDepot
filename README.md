@@ -37,6 +37,8 @@ Product-focused layout (since 2026-10-24). Old layout saved as git tag `v1-befor
 8. FAQ (rounded question boxes)
 9. Footer (navy gradient); phone bottom bar (View Products / Order Now)
 
+Phones: menu collapses into a hamburger (☰ → ✕); product specs open inside the card instead of the floating panel (the panel showed blank on iPhone Safari).
+
 Style: Google Home–inspired. Logo colors only: orange→red gradient (`--sun`) for highlights and main buttons, navy/blue for text and outlines, light tints `--tint-sun` / `--tint-blue` for cards. Every section heading = small orange label + large navy title with one gradient word. Content fades up on scroll; soft glows drift behind Products and Why Us. Savings calculator removed.
 
 ## Still placeholder (yellow highlight or noted in code)
